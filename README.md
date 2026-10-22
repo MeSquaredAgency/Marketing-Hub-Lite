@@ -46,7 +46,7 @@ About two to three days, most of it loading brand material.
 
 - [ ] Claude seat for the Marketing Executive
 - [ ] Three Projects created (APN, Me², Courage), each loaded from `brands/<brand>/` plus the last 10 approved posts
-- [ ] Marketing Sheet built from `sheet/` (six tabs), Facts and Assets filled for each brand
+- [x] Marketing Sheet built: [Me² Marketing Sheet](https://docs.google.com/spreadsheets/d/1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms/edit), six tabs, dropdowns, status colours, approver columns protected. Facts seeded with the standing facts from both websites (marked "confirm"). Still to do: confirm those facts, add market facts, fill Assets and Budgets
 - [ ] `brand-post` skill uploaded to each Project and tested on one post per brand
 - [ ] Metricool: three brands created, every channel connected, connector added in Claude
 - [x] Windsor.ai connected in Claude (trial plan). GA4 for APN and Search Console for both sites verified; Facebook, LinkedIn, GBP and Google Ads also connected. Still missing: GA4 for mesquaredagency.com, Instagram, YouTube, TikTok. See [`docs/connectors.md`](docs/connectors.md)

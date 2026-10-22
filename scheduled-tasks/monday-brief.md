@@ -2,7 +2,7 @@
 
 Create one scheduled task per brand in Claude, or one task that loops over the three brands. Runs every Monday at 7:00am Australia/Adelaide (cron `0 7 * * 1` with `CRON_TZ=Australia/Adelaide`). Needs the Google Sheets, Google Drive, Metricool and Windsor.ai connectors.
 
-Replace `{{BRAND}}` with `APN`, `Me2` or `Courage` and `{{SHEET_URL}}` with the Marketing Sheet link.
+Replace `{{BRAND}}` with `APN`, `Me2` or `Courage`. `{{SHEET_URL}}` is https://docs.google.com/spreadsheets/d/1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms/edit
 
 ---
 

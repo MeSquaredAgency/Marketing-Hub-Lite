@@ -36,6 +36,7 @@ Verified pulls (22 Oct): GA4 daily sessions and key events for APN, Search Conso
 
 Needed for scheduling to every platform and for Instagram, TikTok and YouTube results. Create the three brands in Metricool, connect every channel, then add the Metricool connector in Claude.
 
-## Google Sheets and Drive — available in Claude
+## Google Sheets and Drive — connected
 
-Used by the skill and the scheduled tasks once the Marketing Sheet exists.
+Marketing Sheet: https://docs.google.com/spreadsheets/d/1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms/edit
+Spreadsheet ID `1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms`. Tab gids: Calendar 0, Spend 1, Budgets 2, Facts 3, Assets 4, Pain log 5.

@@ -47,6 +47,6 @@ None approved yet. Options: adapt `quote-card` for member stories, or build a `c
 
 ## Records
 
-- Marketing Sheet: *(paste link)*; this brand's rows have `brand = Courage`
+- Marketing Sheet: https://docs.google.com/spreadsheets/d/1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms/edit (Calendar tab gid 0); this brand's rows have `brand = Courage`
 - Drive folder: *(TODO)*
 - Approver: Elliot Crabb

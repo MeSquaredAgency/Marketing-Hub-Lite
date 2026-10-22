@@ -65,6 +65,6 @@ Metricool brand name: **APN Real Estate**. Time zone Australia/Adelaide.
 
 ## Records
 
-- Marketing Sheet: *(paste link)*; this brand's rows have `brand = APN`
+- Marketing Sheet: https://docs.google.com/spreadsheets/d/1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms/edit (Calendar tab gid 0); this brand's rows have `brand = APN`
 - Drive folder: *(paste link to the existing APN marketing folder)*
 - Approver: Elliot Crabb. Backup approver: *(open decision)*

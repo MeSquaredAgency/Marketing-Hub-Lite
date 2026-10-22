@@ -53,6 +53,6 @@ Metricool brand name: **Me²**. Time zone Australia/Adelaide (clients' zone).
 
 ## Records
 
-- Marketing Sheet: *(paste link)*; this brand's rows have `brand = Me2`
+- Marketing Sheet: https://docs.google.com/spreadsheets/d/1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms/edit (Calendar tab gid 0); this brand's rows have `brand = Me2`
 - Drive folder: *(paste link)*
 - Approver: Elliot Crabb

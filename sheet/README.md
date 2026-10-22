@@ -1,5 +1,7 @@
 # The Marketing Sheet
 
+**Live sheet:** https://docs.google.com/spreadsheets/d/1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms/edit (built 22 Oct 2026 through the Sheets connector; tab gids are Calendar 0, Spend 1, Budgets 2, Facts 3, Assets 4, Pain log 5).
+
 One Google Sheet, six tabs, shared with the Executive and Elliot. It is the record for every post, every dollar, every fact and every asset. Claude reads and writes it through the Google Sheets connector; Elliot approves in it from a phone.
 
 Build it either way:

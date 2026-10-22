@@ -4,7 +4,7 @@ One scheduled task per brand, plus a short portfolio summary for Patrick. Runs o
 
 The report is a **draft**. Elliot edits it before anything goes to a client. Nothing is sent to a client by this task.
 
-Replace `{{BRAND}}` and `{{SHEET_URL}}`.
+Replace `{{BRAND}}`. `{{SHEET_URL}}` is https://docs.google.com/spreadsheets/d/1lqpTD7c6FtfCr5W0B-UoFagw-j6lABuomlHeunv6Kms/edit
 
 ---
 
