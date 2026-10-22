@@ -44,7 +44,7 @@ Work one Calendar row at a time. If the Executive gives several, loop.
 2. **Gather facts.** Every claim in the post must trace to a Facts row for this brand with a valid expiry, or to the Executive's brief for plain descriptive copy (a listing's suburb and bedroom count come from the listing brief; a market statistic needs a Facts row). List the Facts row IDs you will use.
 3. **Check the asset.** If the post uses a photo or video with people in it, find it in the Assets tab. `consent_recorded` must be `Yes`. If the asset is not in the tab, or consent is blank or `No`, do not use it. Say what is missing and offer a template-only tile instead.
 4. **Draft per platform.** Write the version for each platform in the row (one row per platform, so usually one). Follow `platforms.md` for length, hashtags, link handling and format. Follow the Project's voice rules. Write the caption, the alt text, and for video the hook, title and description.
-5. **Run the compliance checklist** in `compliance-checklist.md`: the shared section, then the brand's section. Record pass or fail per item. On any fail, fix and re-run. If it cannot be fixed (the claim has no Fact, the person has no consent), stop the row at `Idea` and leave a note in `notes`.
+5. **Run the caption checker, then the compliance checklist.** If the repo's `scripts/check-caption.mjs` is available, run it on each caption (`node scripts/check-caption.mjs <brand> <platform> caption.txt`) and fix every FAIL before going on; WARNs are judgement calls, note them. Then run `compliance-checklist.md`: the shared section, then the brand's section. Record pass or fail per item. On any fail, fix and re-run. If it cannot be fixed (the claim has no Fact, the person has no consent), stop the row at `Idea` and leave a note in `notes`.
 6. **Render tiles** if the row's `format` is `tile`, `carousel` or `story`:
    - Pick the template named in the row, or the default for the brand and post type (see "Template defaults" below).
    - Fill the template's fields from the draft. The legal line on APN templates is fixed in the template; never remove or restyle it.
@@ -61,6 +61,7 @@ Work one Calendar row at a time. If the Executive gives several, loop.
 | APN | Listing, open home, sold, leased | `listing-tile` |
 | APN | Property management, landlord, tenant, appraisal | `pm-hero` |
 | APN | Testimonial, team quote, market comment | `quote-card` |
+| APN | One verified number from the Facts tab | `market-stat` |
 | Me² | Everything | `me2-post` |
 | Courage | Not yet set. Ask Elliot before rendering. | — |
 

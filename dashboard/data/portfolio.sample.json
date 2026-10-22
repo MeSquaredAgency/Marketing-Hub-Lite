@@ -1,79 +1,547 @@
 {
   "snapshot_date": "2026-11-02",
   "week_label": "Week of 2 Nov 2026",
-  "period": { "last_week": "26 Oct – 1 Nov", "month": "2026-11" },
+  "period": {
+    "last_week": "26 Oct – 1 Nov",
+    "month": "2026-11"
+  },
   "sample": true,
+  "started_on": "2026-10-27",
+  "sheet_url": "https://docs.google.com/spreadsheets/d/EXAMPLE",
+  "calendar_gid": "0",
+  "history_weeks": [
+    "14 Sep",
+    "21 Sep",
+    "28 Sep",
+    "5 Oct",
+    "12 Oct",
+    "19 Oct",
+    "26 Oct"
+  ],
+  "pain_log": {
+    "total": 3,
+    "by_trigger": {
+      "Compliance hard block": 0,
+      "Self-serve renderer": 1,
+      "Spend module": 0,
+      "Full hub": 0,
+      "None": 2
+    },
+    "recent": [
+      {
+        "date": "2026-10-30",
+        "brand": "APN",
+        "what_happened": "Waited a day for a tile size the template didn't have (GBP)",
+        "build_trigger": "Self-serve renderer"
+      },
+      {
+        "date": "2026-10-29",
+        "brand": "Me2",
+        "what_happened": "Metricool connector refused LinkedIn document post; posted as image",
+        "build_trigger": "None"
+      },
+      {
+        "date": "2026-10-28",
+        "brand": "APN",
+        "what_happened": "Receipt PDF unreadable, re-requested from vendor",
+        "build_trigger": "None"
+      }
+    ]
+  },
   "brands": [
     {
       "id": "apn",
       "name": "APN Real Estate",
+      "links": {
+        "project": "",
+        "drive": "",
+        "metricool": ""
+      },
       "attention": [
-        { "kind": "unapproved", "text": "1 Instagram post scheduled in Metricool for Thu 5 Nov has no Approved row" },
-        { "kind": "fact", "text": "F-0012 (median days on market, Blair Athol) expires 10 Nov and is used by CAL-0031" }
+        {
+          "kind": "unapproved",
+          "text": "1 Instagram post scheduled in Metricool for Thu 5 Nov has no Approved row"
+        },
+        {
+          "kind": "fact",
+          "text": "F-0012 (median days on market, Blair Athol) expires 10 Nov and is used by CAL-0031"
+        }
       ],
       "results": {
-        "reach": { "label": "Reach", "value": 12400, "prior": 10900, "source": "Metricool" },
-        "engagement": { "label": "Engagements", "value": 486, "prior": 402, "source": "Metricool" },
-        "followers_delta": { "label": "New followers", "value": 38, "prior": 21, "source": "Metricool" },
-        "sessions": { "label": "Site sessions", "value": 1930, "prior": 2010, "source": "GA4" },
-        "search_clicks": { "label": "Search clicks", "value": 410, "prior": 388, "source": "Search Console" }
+        "reach": {
+          "label": "Reach",
+          "value": 12400,
+          "prior": 10900,
+          "source": "Metricool",
+          "history": [
+            8200,
+            9100,
+            8800,
+            10200,
+            9900,
+            10900,
+            12400
+          ]
+        },
+        "engagement": {
+          "label": "Engagements",
+          "value": 486,
+          "prior": 402,
+          "source": "Metricool",
+          "history": [
+            310,
+            350,
+            330,
+            390,
+            370,
+            402,
+            486
+          ]
+        },
+        "followers_delta": {
+          "label": "New followers",
+          "value": 38,
+          "prior": 21,
+          "source": "Metricool",
+          "history": [
+            12,
+            18,
+            15,
+            22,
+            19,
+            21,
+            38
+          ]
+        },
+        "sessions": {
+          "label": "Site sessions",
+          "value": 1930,
+          "prior": 2010,
+          "source": "GA4",
+          "history": [
+            1750,
+            1820,
+            1790,
+            1900,
+            1960,
+            2010,
+            1930
+          ]
+        },
+        "search_clicks": {
+          "label": "Search clicks",
+          "value": 410,
+          "prior": 388,
+          "source": "Search Console",
+          "history": [
+            320,
+            340,
+            335,
+            360,
+            372,
+            388,
+            410
+          ]
+        }
       },
+      "platforms": [
+        {
+          "name": "Facebook",
+          "posts": 4,
+          "reach": 6100,
+          "engagement": 241,
+          "followers_delta": 12
+        },
+        {
+          "name": "Instagram",
+          "posts": 4,
+          "reach": 4200,
+          "engagement": 188,
+          "followers_delta": 19
+        },
+        {
+          "name": "LinkedIn",
+          "posts": 1,
+          "reach": 900,
+          "engagement": 27,
+          "followers_delta": 4
+        },
+        {
+          "name": "YouTube Shorts",
+          "posts": 1,
+          "reach": 1200,
+          "engagement": 30,
+          "followers_delta": 3
+        }
+      ],
       "spend": {
         "month": "2026-11",
         "categories": [
-          { "name": "Ads", "spent": 420, "budget": 800 },
-          { "name": "Tools", "spent": 31, "budget": 60 },
-          { "name": "Creative", "spent": 0, "budget": 150 },
-          { "name": "Print", "spent": 185, "budget": 200 }
+          {
+            "name": "Ads",
+            "spent": 420,
+            "budget": 800
+          },
+          {
+            "name": "Tools",
+            "spent": 31,
+            "budget": 60
+          },
+          {
+            "name": "Creative",
+            "spent": 0,
+            "budget": 150
+          },
+          {
+            "name": "Print",
+            "spent": 185,
+            "budget": 200
+          }
         ]
       },
-      "this_week": { "planned": 6, "scheduled": 3, "in_review": 2, "idea": 1 },
+      "this_week": {
+        "planned": 6,
+        "scheduled": 3,
+        "in_review": 2,
+        "idea": 1
+      },
+      "calendar_week": [
+        {
+          "id": "CAL-0030",
+          "date": "2026-11-02",
+          "platform": "Facebook",
+          "status": "Scheduled",
+          "copy": "Open home Sat: 12 Example St"
+        },
+        {
+          "id": "CAL-0031",
+          "date": "2026-11-04",
+          "platform": "Instagram",
+          "status": "In review",
+          "copy": "Just listed: 12 Example Street",
+          "row": 32
+        },
+        {
+          "id": "CAL-0032",
+          "date": "2026-11-04",
+          "platform": "GBP",
+          "status": "Scheduled",
+          "copy": "Open home this Saturday"
+        },
+        {
+          "id": "CAL-0033",
+          "date": "2026-11-06",
+          "platform": "LinkedIn",
+          "status": "In review",
+          "copy": "What a routine inspection covers",
+          "row": 34
+        },
+        {
+          "id": "CAL-0034",
+          "date": "2026-11-07",
+          "platform": "YouTube Shorts",
+          "status": "Scheduled",
+          "copy": "Walkthrough: 12 Example St"
+        },
+        {
+          "id": "CAL-0036",
+          "date": "2026-11-08",
+          "platform": "Instagram",
+          "status": "Idea",
+          "copy": "Sold: 4 Sample Ave"
+        }
+      ],
       "queue": [
-        { "id": "CAL-0031", "date": "2026-11-04", "platform": "Instagram", "format": "tile", "copy": "Just listed: 12 Example Street, Blair Athol", "since_days": 2 },
-        { "id": "CAL-0033", "date": "2026-11-06", "platform": "LinkedIn", "format": "text", "copy": "What a routine inspection actually covers", "since_days": 1 }
+        {
+          "id": "CAL-0031",
+          "row": 32,
+          "date": "2026-11-04",
+          "platform": "Instagram",
+          "format": "tile",
+          "copy": "Just listed: 12 Example Street, Blair Athol",
+          "since_days": 2
+        },
+        {
+          "id": "CAL-0033",
+          "row": 34,
+          "date": "2026-11-06",
+          "platform": "LinkedIn",
+          "format": "text",
+          "copy": "What a routine inspection actually covers",
+          "since_days": 1
+        }
       ],
       "facts_expiring": [
-        { "id": "F-0012", "fact": "Median days on market, Blair Athol houses: 24 (Sep 2026)", "expires_on": "2026-11-10" }
+        {
+          "id": "F-0012",
+          "fact": "Median days on market, Blair Athol houses: 24 (Sep 2026)",
+          "expires_on": "2026-11-10"
+        }
       ],
-      "top_post": { "platform": "Facebook", "copy": "Sold in 9 days: 4 Sample Avenue, Enfield", "engagement": 142, "link": "" }
+      "top_posts": [
+        {
+          "platform": "Facebook",
+          "copy": "Sold in 9 days: 4 Sample Avenue, Enfield",
+          "engagement": 142,
+          "link": ""
+        },
+        {
+          "platform": "Instagram",
+          "copy": "Three things landlords ask us every spring",
+          "engagement": 97,
+          "link": ""
+        },
+        {
+          "platform": "YouTube Shorts",
+          "copy": "Walkthrough: 8 Demo Court, Mount Gambier",
+          "engagement": 30,
+          "link": ""
+        }
+      ],
+      "search_movers": [
+        {
+          "query": "property management mount gambier",
+          "position": 4.2,
+          "prior_position": 7.8,
+          "clicks": 41
+        },
+        {
+          "query": "rental appraisal adelaide",
+          "position": 6.1,
+          "prior_position": 9.4,
+          "clicks": 22
+        },
+        {
+          "query": "houses for sale blair athol",
+          "position": 11.3,
+          "prior_position": 8.9,
+          "clicks": 15
+        }
+      ]
     },
     {
       "id": "me2",
       "name": "Me²",
+      "links": {
+        "project": "",
+        "drive": "",
+        "metricool": ""
+      },
       "attention": [],
       "results": {
-        "reach": { "label": "Reach", "value": 3100, "prior": 2600, "source": "Metricool" },
-        "engagement": { "label": "Engagements", "value": 128, "prior": 95, "source": "Metricool" },
-        "followers_delta": { "label": "New followers", "value": 14, "prior": 9, "source": "Metricool" },
-        "sessions": { "label": "Site sessions", "value": 640, "prior": 590, "source": "GA4" },
-        "search_clicks": { "label": "Search clicks", "value": 96, "prior": 84, "source": "Search Console" }
+        "reach": {
+          "label": "Reach",
+          "value": 3100,
+          "prior": 2600,
+          "source": "Metricool",
+          "history": [
+            1400,
+            1700,
+            1900,
+            2200,
+            2400,
+            2600,
+            3100
+          ]
+        },
+        "engagement": {
+          "label": "Engagements",
+          "value": 128,
+          "prior": 95,
+          "source": "Metricool",
+          "history": [
+            40,
+            55,
+            62,
+            78,
+            84,
+            95,
+            128
+          ]
+        },
+        "followers_delta": {
+          "label": "New followers",
+          "value": 14,
+          "prior": 9,
+          "source": "Metricool",
+          "history": [
+            3,
+            5,
+            4,
+            7,
+            8,
+            9,
+            14
+          ]
+        },
+        "sessions": {
+          "label": "Site sessions",
+          "value": 640,
+          "prior": 590,
+          "source": "GA4",
+          "history": [
+            410,
+            450,
+            480,
+            520,
+            560,
+            590,
+            640
+          ]
+        },
+        "search_clicks": {
+          "label": "Search clicks",
+          "value": 96,
+          "prior": 84,
+          "source": "Search Console",
+          "history": [
+            52,
+            58,
+            63,
+            70,
+            77,
+            84,
+            96
+          ]
+        }
       },
+      "platforms": [
+        {
+          "name": "LinkedIn",
+          "posts": 3,
+          "reach": 2300,
+          "engagement": 104,
+          "followers_delta": 11
+        },
+        {
+          "name": "Facebook",
+          "posts": 2,
+          "reach": 800,
+          "engagement": 24,
+          "followers_delta": 3
+        }
+      ],
       "spend": {
         "month": "2026-11",
         "categories": [
-          { "name": "Ads", "spent": 0, "budget": 300 },
-          { "name": "Tools", "spent": 43, "budget": 45 }
+          {
+            "name": "Ads",
+            "spent": 0,
+            "budget": 300
+          },
+          {
+            "name": "Tools",
+            "spent": 43,
+            "budget": 45
+          }
         ]
       },
-      "this_week": { "planned": 5, "scheduled": 4, "in_review": 1, "idea": 0 },
+      "this_week": {
+        "planned": 5,
+        "scheduled": 4,
+        "in_review": 1,
+        "idea": 0
+      },
+      "calendar_week": [
+        {
+          "id": "CAL-0029",
+          "date": "2026-11-02",
+          "platform": "LinkedIn",
+          "status": "Scheduled",
+          "copy": "Why we check every email"
+        },
+        {
+          "id": "CAL-0035",
+          "date": "2026-11-05",
+          "platform": "LinkedIn",
+          "status": "In review",
+          "copy": "One person, dedicated to you",
+          "row": 36
+        },
+        {
+          "id": "CAL-0037",
+          "date": "2026-11-05",
+          "platform": "Facebook",
+          "status": "Scheduled",
+          "copy": "Say a plumber with four vans…"
+        },
+        {
+          "id": "CAL-0038",
+          "date": "2026-11-07",
+          "platform": "LinkedIn",
+          "status": "Scheduled",
+          "copy": "What 'checked before it goes out' means"
+        },
+        {
+          "id": "CAL-0039",
+          "date": "2026-11-08",
+          "platform": "Facebook",
+          "status": "Scheduled",
+          "copy": "The 10pm admin problem"
+        }
+      ],
       "queue": [
-        { "id": "CAL-0035", "date": "2026-11-05", "platform": "LinkedIn", "format": "tile", "copy": "One person, dedicated to you. Specialists behind them.", "since_days": 1 }
+        {
+          "id": "CAL-0035",
+          "row": 36,
+          "date": "2026-11-05",
+          "platform": "LinkedIn",
+          "format": "tile",
+          "copy": "One person, dedicated to you. Specialists behind them.",
+          "since_days": 1
+        }
       ],
       "facts_expiring": [],
-      "top_post": { "platform": "LinkedIn", "copy": "Why we check every email before it goes out", "engagement": 61, "link": "" }
+      "top_posts": [
+        {
+          "platform": "LinkedIn",
+          "copy": "Why we check every email before it goes out",
+          "engagement": 61,
+          "link": ""
+        },
+        {
+          "platform": "LinkedIn",
+          "copy": "An extra set of hands, explained",
+          "engagement": 33,
+          "link": ""
+        }
+      ],
+      "search_movers": [
+        {
+          "query": "outsourced back office australia",
+          "position": 9.6,
+          "prior_position": 14.2,
+          "clicks": 12
+        }
+      ]
     },
     {
       "id": "courage",
       "name": "Courage Health & Fitness",
+      "links": {},
       "attention": [
-        { "kind": "setup", "text": "Project not built yet: brand inputs still pending from the client" }
+        {
+          "kind": "setup",
+          "text": "Project not built yet: brand inputs still pending from the client"
+        }
       ],
       "results": {},
-      "spend": { "month": "2026-11", "categories": [] },
-      "this_week": { "planned": 0, "scheduled": 0, "in_review": 0, "idea": 0 },
+      "platforms": [],
+      "spend": {
+        "month": "2026-11",
+        "categories": []
+      },
+      "this_week": {
+        "planned": 0,
+        "scheduled": 0,
+        "in_review": 0,
+        "idea": 0
+      },
+      "calendar_week": [],
       "queue": [],
       "facts_expiring": [],
-      "top_post": null
+      "top_posts": [],
+      "search_movers": []
     }
   ]
 }

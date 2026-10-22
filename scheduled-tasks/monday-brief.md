@@ -55,6 +55,11 @@ Keep it under 400 words. Plain language, no hype. Use this shape:
 
 - Save the brief as a Google Doc named `{{BRAND}} Monday brief YYYY-MM-DD` in the brand's Drive marketing folder under `Reports/Weekly/`.
 - Post the brief as the result of this task so Elliot and the Executive see it in Claude.
-- Update the portfolio dashboard snapshot: read `dashboard/data/portfolio.json` from the Drive folder `Marketing Hub/Dashboard/`, replace this brand's section with this week's numbers (the schema is in the file), and save it back. The dashboard artifact reads that file.
+- Update the portfolio dashboard snapshot. Read `data/portfolio.json` from the dashboard artifact (or the Drive folder `Marketing Hub/Dashboard/` if that is where it lives), replace this brand's object and the shared fields, and republish it to the artifact. The schema is in `dashboard/README.md`. For this brand write:
+  - `attention[]`: every item from the Audit step, with `kind` set to `unapproved`, `fact`, `budget` or `stale` (In review older than 3 days)
+  - `results`: reach, engagements, new followers, site sessions, search clicks, each with `prior` and a 7-week `history` (shift last week's history and append this week)
+  - `platforms[]`, `top_posts[]` (top 3), `search_movers[]` (top 5 by position change)
+  - `spend`, `this_week`, `calendar_week[]` (every Calendar row dated in the next 7 days, with its Sheet `row` number), `queue[]`, `facts_expiring[]`
+  - Shared: `snapshot_date` = today, `week_label`, `period`, `history_weeks`, `sheet_url`, `calendar_gid`, `started_on`, and `pain_log` (total rows, count by `build_trigger`, the 5 most recent rows).
 
 If a connector is unavailable, say which one, write the brief with what you have, and add a Pain log row with category `Connector`.

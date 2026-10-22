@@ -12,11 +12,11 @@ The plan this repo implements is in [`docs/lite-plan.md`](docs/lite-plan.md).
 |---|---|---|
 | [`skills/brand-post/`](skills/brand-post/) | The shared `brand-post` skill: draft per platform, run the compliance checklist, render tiles, save to Drive, add the Calendar row | Uploaded to each brand's Claude Project |
 | [`brands/`](brands/) | One folder per brand: Project instructions, brand kit (`brand.json`), compliance rules, channel list | Pasted into the Project's instructions and knowledge |
-| [`templates/`](templates/) | The four approved HTML/CSS tile templates: listing tile, PM hero, quote card, Me² post | Rendered by the skill and by `scripts/render-tile.mjs` |
-| [`scripts/`](scripts/) | `render-tile.mjs` renders a template plus a JSON file to PNG at platform sizes | Local rendering and the week-1 test |
+| [`templates/`](templates/) | The five approved HTML/CSS tile templates: listing tile, PM hero, quote card, market stat, Me² post | Rendered by the skill and by `scripts/render-tile.mjs` |
+| [`scripts/`](scripts/) | `render-tile.mjs` renders a template plus a JSON file to PNG at platform sizes; `check-caption.mjs` runs the mechanical compliance checks on a caption | Local rendering, caption pre-checks and the week-1 test |
 | [`sheet/`](sheet/) | The Marketing Sheet: six tabs, their columns, status values, and an Apps Script that builds it | Google Sheets |
 | [`scheduled-tasks/`](scheduled-tasks/) | Prompts for the Monday brief (per brand) and the monthly report (1st of the month) | Claude scheduled tasks |
-| [`dashboard/`](dashboard/) | The portfolio dashboard page and the JSON snapshot it reads | Published as a Claude artifact, refreshed by the Monday task |
+| [`dashboard/`](dashboard/) | The portfolio dashboard: overview with flags and the week-8 tracker, a tab per brand with the week strip, sparklines, platform table, budget pace, approval queue and search movers | Published as a Claude artifact, refreshed by the Monday task |
 
 ## How it fits together
 

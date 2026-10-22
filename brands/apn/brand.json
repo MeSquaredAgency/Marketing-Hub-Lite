@@ -35,5 +35,5 @@
     "gbp": ["Adelaide", "Mount Gambier"]
   },
   "hashtags": ["#apnrealestate", "#adelaiderealestate", "#mountgambier", "#southaustralia", "#propertymanagement"],
-  "templates": ["listing-tile", "pm-hero", "quote-card"]
+  "templates": ["listing-tile", "pm-hero", "quote-card", "market-stat"]
 }

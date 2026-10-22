@@ -61,6 +61,7 @@ Metricool brand name: **APN Real Estate**. Time zone Australia/Adelaide.
 | `listing-tile` | For sale, for lease, open home, sold, leased |
 | `pm-hero` | Property management, landlord and tenant messaging, appraisals |
 | `quote-card` | Testimonials, agent quotes, market comment |
+| `market-stat` | One verified number from the Facts tab, with its source on the tile |
 
 ## Records
 

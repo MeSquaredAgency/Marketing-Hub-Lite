@@ -2,220 +2,463 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
 <style>
-  /* Layout: one column of brand panels under a portfolio "needs attention" strip. Scanned, not read. */
+  /* Layout: tab row (Overview + one tab per brand); overview is a scan page, a brand tab is the full detail. */
   :root {
-    --bg: #fbf8f2; --surface: #ffffff; --line: #e6dfd3; --ink: #10202f; --ink-2: #4c5660; --ink-3: #8a8378;
-    --accent: #e7785c; --accent-ink: #a6412a;
-    --good: #2f7d4f; --warn: #b7791f; --bad: #b3261e; --neutral-fill: #efe9df;
-    --bar-fill: #10202f; --bar-track: #efe9df;
+    --bg: #fbf8f2; --surface: #ffffff; --surface-2: #f6f1e8; --line: #e6dfd3; --ink: #10202f; --ink-2: #4c5660; --ink-3: #8a8378;
+    --accent: #e7785c; --accent-ink: #a6412a; --accent-soft: #fbe9e2;
+    --good: #2f7d4f; --warn: #b7791f; --bad: #b3261e; --good-soft: #e4f1e8; --warn-soft: #f8edd8; --bad-soft: #f9e3e1;
+    --bar-fill: #10202f; --bar-track: #efe9df; --spark: #10202f; --spark-area: rgba(16,32,47,.08);
     --sans: "Instrument Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --bg: #121a22; --surface: #1a242e; --line: #2c3842; --ink: #f1ece4; --ink-2: #b9b2a7; --ink-3: #847d72;
-      --accent: #ef8a6e; --accent-ink: #f0a58d; --good: #6fc48f; --warn: #e0a84a; --bad: #f08a80; --neutral-fill: #243039;
-      --bar-fill: #f1ece4; --bar-track: #243039; color-scheme: dark;
+      --bg: #121a22; --surface: #1a242e; --surface-2: #202c37; --line: #2c3842; --ink: #f1ece4; --ink-2: #b9b2a7; --ink-3: #847d72;
+      --accent: #ef8a6e; --accent-ink: #f0a58d; --accent-soft: #3a2a25;
+      --good: #6fc48f; --warn: #e0a84a; --bad: #f08a80; --good-soft: #1f3328; --warn-soft: #3a2f1a; --bad-soft: #3d2322;
+      --bar-fill: #f1ece4; --bar-track: #243039; --spark: #f1ece4; --spark-area: rgba(241,236,228,.10); color-scheme: dark;
     }
   }
   :root[data-theme="dark"] {
-    --bg: #121a22; --surface: #1a242e; --line: #2c3842; --ink: #f1ece4; --ink-2: #b9b2a7; --ink-3: #847d72;
-    --accent: #ef8a6e; --accent-ink: #f0a58d; --good: #6fc48f; --warn: #e0a84a; --bad: #f08a80; --neutral-fill: #243039;
-    --bar-fill: #f1ece4; --bar-track: #243039; color-scheme: dark;
+    --bg: #121a22; --surface: #1a242e; --surface-2: #202c37; --line: #2c3842; --ink: #f1ece4; --ink-2: #b9b2a7; --ink-3: #847d72;
+    --accent: #ef8a6e; --accent-ink: #f0a58d; --accent-soft: #3a2a25;
+    --good: #6fc48f; --warn: #e0a84a; --bad: #f08a80; --good-soft: #1f3328; --warn-soft: #3a2f1a; --bad-soft: #3d2322;
+    --bar-fill: #f1ece4; --bar-track: #243039; --spark: #f1ece4; --spark-area: rgba(241,236,228,.10); color-scheme: dark;
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45;
-    padding-block: 24px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-  .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 28px; }
-  header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+    padding-block: 20px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .wrap { max-width: 1120px; margin: 0 auto; display: grid; gap: 22px; }
+  a { color: var(--accent-ink); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  header.top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
   h1 { font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -.01em; }
   h1 sup { color: var(--accent); font-size: .6em; }
   .meta { color: var(--ink-2); font-size: 14px; }
   .meta b { color: var(--ink); font-weight: 600; }
-  .sample-flag { display: inline-block; margin-left: 10px; padding: 2px 8px; border-radius: 999px; background: var(--neutral-fill); color: var(--ink-2); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  .flag { display: inline-block; margin-left: 10px; padding: 2px 8px; border-radius: 999px; background: var(--bar-track); color: var(--ink-2); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+
+  nav.tabs { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
+  nav.tabs button { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; padding: 8px 12px; font: inherit; font-weight: 600; color: var(--ink-2); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  nav.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  nav.tabs .count { font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 999px; background: var(--bad-soft); color: var(--bad); }
+  nav.tabs .count.zero { background: var(--good-soft); color: var(--good); }
+  nav.tabs .hint { margin-left: auto; align-self: center; font-size: 12px; color: var(--ink-3); }
 
   .attention { border: 1px solid var(--line); border-left: 4px solid var(--warn); background: var(--surface); border-radius: 6px; padding: 14px 18px; }
   .attention.clear { border-left-color: var(--good); }
-  .attention h2 { margin: 0 0 8px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  h2.eyebrow, h3 { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
   .attention ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
   .attention li { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: baseline; }
-  .tag { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: var(--neutral-fill); color: var(--ink-2); white-space: nowrap; }
-  .tag.unapproved { color: var(--bad); }
-  .tag.fact, .tag.budget { color: var(--warn); }
-  .brand-name { font-weight: 600; margin-right: 6px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: var(--bar-track); color: var(--ink-2); white-space: nowrap; }
+  .tag.unapproved { background: var(--bad-soft); color: var(--bad); }
+  .tag.fact, .tag.budget, .tag.stale { background: var(--warn-soft); color: var(--warn); }
+  .attention a.brand-link { font-weight: 600; color: var(--ink); text-decoration: none; margin-right: 6px; }
+  .attention a.brand-link:hover { text-decoration: underline; }
 
-  .brand { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px 22px; display: grid; gap: 20px; }
-  .brand > header h2 { margin: 0; font-size: 18px; font-weight: 700; }
-  .week { display: flex; gap: 14px; flex-wrap: wrap; color: var(--ink-2); font-size: 14px; }
-  .week span b { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 18px 20px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+  .brand-card { display: grid; gap: 12px; min-width: 0; }
+  .brand-card header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .brand-card h2 { margin: 0; font-size: 17px; font-weight: 700; }
+  .brand-card h2 a { color: inherit; text-decoration: none; }
+  .brand-card h2 a:hover { text-decoration: underline; }
+  .mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .mini .stat { padding: 8px 10px; }
+  .mini .value { font-size: 20px; }
+  .kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 14px; color: var(--ink-2); }
+  .kv b { color: var(--ink); font-variant-numeric: tabular-nums; font-weight: 600; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+  .pill.good { background: var(--good-soft); color: var(--good); }
+  .pill.warn { background: var(--warn-soft); color: var(--warn); }
+  .pill.bad { background: var(--bad-soft); color: var(--bad); }
+  .pill.muted { background: var(--bar-track); color: var(--ink-2); }
 
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
-  .stat { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 2px; min-width: 0; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .stat { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 2px; min-width: 0; position: relative; }
   .stat .label { font-size: 12px; color: var(--ink-2); letter-spacing: .04em; text-transform: uppercase; font-weight: 600; }
   .stat .value { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.01em; line-height: 1.1; }
   .stat .delta { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--ink-2); }
   .stat .delta.up { color: var(--good); } .stat .delta.down { color: var(--bad); }
   .stat .src { font-size: 11px; color: var(--ink-3); }
+  .stat svg.spark { width: 100%; height: 34px; display: block; margin-top: 6px; overflow: visible; }
+  .spark path.area { fill: var(--spark-area); }
+  .spark path.line { fill: none; stroke: var(--spark); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+  .spark circle { fill: var(--accent); }
+  .spark line.hover { stroke: var(--ink-3); stroke-width: 1; opacity: 0; }
+  .stat .tip { position: absolute; right: 10px; top: 10px; font-size: 12px; color: var(--ink-2); background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 2px 6px; font-variant-numeric: tabular-nums; display: none; pointer-events: none; }
+
+  .detail { display: grid; gap: 20px; }
+  .detail > header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; }
+  .detail > header h2 { margin: 0; font-size: 20px; font-weight: 700; }
+  .links { display: flex; gap: 12px; flex-wrap: wrap; font-size: 13px; }
+  .week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+  .day { border: 1px solid var(--line); border-radius: 6px; padding: 8px; min-height: 86px; display: grid; align-content: start; gap: 4px; background: var(--surface-2); min-width: 0; }
+  .day.today { border-color: var(--accent); }
+  .day .d { font-size: 12px; font-weight: 700; color: var(--ink-2); letter-spacing: .04em; text-transform: uppercase; }
+  .day .d span { color: var(--ink-3); font-weight: 500; margin-left: 4px; }
+  .post { font-size: 11px; line-height: 1.3; border-radius: 4px; padding: 3px 6px; background: var(--surface); border-left: 3px solid var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: default; }
+  .post.Scheduled, .post.Published { border-left-color: var(--good); }
+  .post.Approved { border-left-color: var(--good); border-left-style: double; }
+  .post.In\.review { border-left-color: var(--warn); }
+  .post.Idea { border-left-color: var(--ink-3); opacity: .8; }
+  .post b { font-weight: 600; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12px; color: var(--ink-2); margin-top: 8px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
 
   .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 20px; }
-  @media (max-width: 720px) { .cols { grid-template-columns: minmax(0, 1fr); } }
   .cols > div { min-width: 0; }
-  h3 { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  @media (max-width: 720px) { .cols { grid-template-columns: minmax(0, 1fr); } .week { grid-template-columns: repeat(2, minmax(0,1fr)); } .mini { grid-template-columns: repeat(3, minmax(0,1fr)); } }
 
   .spend { display: grid; gap: 10px; }
   .spend-row { display: grid; grid-template-columns: 72px 1fr auto; gap: 10px; align-items: center; font-size: 14px; }
-  .spend-row .track { position: relative; height: 10px; background: var(--bar-track); border-radius: 2px; overflow: hidden; }
+  .spend-row .track { position: relative; height: 10px; background: var(--bar-track); border-radius: 2px; }
   .spend-row .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--bar-fill); border-radius: 0 2px 2px 0; }
-  .spend-row .fill.over { background: var(--bad); }
-  .spend-row .fill.near { background: var(--warn); }
+  .spend-row .fill.over { background: var(--bad); } .spend-row .fill.near { background: var(--warn); }
+  .spend-row .tick { position: absolute; top: -3px; bottom: -3px; border-left: 2px solid var(--ink-3); }
+  .spend-row .pace { position: absolute; top: -3px; bottom: -3px; border-left: 2px dashed var(--accent); }
   .spend-row .amt { font-variant-numeric: tabular-nums; color: var(--ink-2); white-space: nowrap; }
   .spend-row .amt b { color: var(--ink); font-weight: 600; }
-  .spend-total { display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 8px; font-size: 14px; color: var(--ink-2); }
+  .spend-total { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 8px; font-size: 14px; color: var(--ink-2); }
   .spend-total b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
   table { width: 100%; border-collapse: collapse; font-size: 14px; }
   th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
   th { font-size: 12px; color: var(--ink-2); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
-  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
-  td .wait { color: var(--ink-3); font-size: 12px; }
-  td .wait.old { color: var(--warn); font-weight: 600; }
+  td.num, th.num { font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+  td .wait { color: var(--ink-3); font-size: 12px; } td .wait.old { color: var(--warn); font-weight: 600; }
   .table-wrap { overflow-x: auto; }
-  .empty { color: var(--ink-3); font-size: 14px; }
-  .top { font-size: 14px; color: var(--ink-2); }
-  .top b { color: var(--ink); }
-  a { color: var(--accent-ink); }
+  .empty { color: var(--ink-3); font-size: 14px; margin: 0; }
+  .mover { font-variant-numeric: tabular-nums; } .mover.up { color: var(--good); } .mover.down { color: var(--bad); }
+  ol.top { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; }
+  ol.top b { font-weight: 600; } ol.top span { color: var(--ink-2); }
+
+  .tracker { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .trigger { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 4px; }
+  .trigger .n { font-size: 24px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .trigger .t { font-weight: 600; font-size: 14px; }
+  .trigger .r { font-size: 12px; color: var(--ink-2); }
+  .trigger.hit { border-color: var(--warn); background: var(--warn-soft); }
+  .countdown { font-size: 14px; color: var(--ink-2); } .countdown b { color: var(--ink); }
+
   footer { color: var(--ink-3); font-size: 13px; }
+  [hidden] { display: none !important; }
   @media (prefers-reduced-motion: no-preference) { .spend-row .fill { transition: width .4s ease; } }
 </style>
 
 <div class="wrap">
-  <header>
+  <header class="top">
     <h1>Me<sup>2</sup> portfolio</h1>
     <div class="meta" id="meta">Loading snapshot…</div>
   </header>
-  <section class="attention" id="attention" aria-live="polite"></section>
-  <div id="brands"></div>
-  <footer>Snapshot written by the Monday brief task from the Marketing Sheet, Metricool and Windsor.ai. For anything newer, ask Claude in the brand's Project.</footer>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Brand"></nav>
+  <main id="view"></main>
+  <footer>Snapshot written by the Monday brief task from the Marketing Sheet, Metricool and Windsor.ai. For anything newer, ask Claude in the brand's Project. Keys 1–4 switch tabs.</footer>
 </div>
 
 <script>
 const SAMPLE = {
   "snapshot_date": "2026-11-02", "week_label": "Week of 2 Nov 2026", "period": { "last_week": "26 Oct – 1 Nov", "month": "2026-11" }, "sample": true,
+  "started_on": "2026-10-27", "sheet_url": "https://docs.google.com/spreadsheets/d/EXAMPLE", "calendar_gid": "0",
+  "history_weeks": ["14 Sep","21 Sep","28 Sep","5 Oct","12 Oct","19 Oct","26 Oct"],
+  "pain_log": { "total": 3, "by_trigger": { "Compliance hard block": 0, "Self-serve renderer": 1, "Spend module": 0, "Full hub": 0, "None": 2 },
+    "recent": [
+      { "date": "2026-10-30", "brand": "APN", "what_happened": "Waited a day for a tile size the template didn't have (GBP)", "build_trigger": "Self-serve renderer" },
+      { "date": "2026-10-29", "brand": "Me2", "what_happened": "Metricool connector refused LinkedIn document post; posted as image", "build_trigger": "None" },
+      { "date": "2026-10-28", "brand": "APN", "what_happened": "Receipt PDF unreadable, re-requested from vendor", "build_trigger": "None" } ] },
   "brands": [
-    { "id": "apn", "name": "APN Real Estate",
+    { "id": "apn", "name": "APN Real Estate", "links": { "project": "", "drive": "", "metricool": "" },
       "attention": [
         { "kind": "unapproved", "text": "1 Instagram post scheduled in Metricool for Thu 5 Nov has no Approved row" },
         { "kind": "fact", "text": "F-0012 (median days on market, Blair Athol) expires 10 Nov and is used by CAL-0031" } ],
       "results": {
-        "reach": { "label": "Reach", "value": 12400, "prior": 10900, "source": "Metricool" },
-        "engagement": { "label": "Engagements", "value": 486, "prior": 402, "source": "Metricool" },
-        "followers_delta": { "label": "New followers", "value": 38, "prior": 21, "source": "Metricool" },
-        "sessions": { "label": "Site sessions", "value": 1930, "prior": 2010, "source": "GA4" },
-        "search_clicks": { "label": "Search clicks", "value": 410, "prior": 388, "source": "Search Console" } },
+        "reach": { "label": "Reach", "value": 12400, "prior": 10900, "source": "Metricool", "history": [8200, 9100, 8800, 10200, 9900, 10900, 12400] },
+        "engagement": { "label": "Engagements", "value": 486, "prior": 402, "source": "Metricool", "history": [310, 350, 330, 390, 370, 402, 486] },
+        "followers_delta": { "label": "New followers", "value": 38, "prior": 21, "source": "Metricool", "history": [12, 18, 15, 22, 19, 21, 38] },
+        "sessions": { "label": "Site sessions", "value": 1930, "prior": 2010, "source": "GA4", "history": [1750, 1820, 1790, 1900, 1960, 2010, 1930] },
+        "search_clicks": { "label": "Search clicks", "value": 410, "prior": 388, "source": "Search Console", "history": [320, 340, 335, 360, 372, 388, 410] } },
+      "platforms": [
+        { "name": "Facebook", "posts": 4, "reach": 6100, "engagement": 241, "followers_delta": 12 },
+        { "name": "Instagram", "posts": 4, "reach": 4200, "engagement": 188, "followers_delta": 19 },
+        { "name": "LinkedIn", "posts": 1, "reach": 900, "engagement": 27, "followers_delta": 4 },
+        { "name": "YouTube Shorts", "posts": 1, "reach": 1200, "engagement": 30, "followers_delta": 3 } ],
       "spend": { "month": "2026-11", "categories": [
         { "name": "Ads", "spent": 420, "budget": 800 }, { "name": "Tools", "spent": 31, "budget": 60 },
         { "name": "Creative", "spent": 0, "budget": 150 }, { "name": "Print", "spent": 185, "budget": 200 } ] },
       "this_week": { "planned": 6, "scheduled": 3, "in_review": 2, "idea": 1 },
+      "calendar_week": [
+        { "id": "CAL-0030", "date": "2026-11-02", "platform": "Facebook", "status": "Scheduled", "copy": "Open home Sat: 12 Example St" },
+        { "id": "CAL-0031", "date": "2026-11-04", "platform": "Instagram", "status": "In review", "copy": "Just listed: 12 Example Street", "row": 32 },
+        { "id": "CAL-0032", "date": "2026-11-04", "platform": "GBP", "status": "Scheduled", "copy": "Open home this Saturday" },
+        { "id": "CAL-0033", "date": "2026-11-06", "platform": "LinkedIn", "status": "In review", "copy": "What a routine inspection covers", "row": 34 },
+        { "id": "CAL-0034", "date": "2026-11-07", "platform": "YouTube Shorts", "status": "Scheduled", "copy": "Walkthrough: 12 Example St" },
+        { "id": "CAL-0036", "date": "2026-11-08", "platform": "Instagram", "status": "Idea", "copy": "Sold: 4 Sample Ave" } ],
       "queue": [
-        { "id": "CAL-0031", "date": "2026-11-04", "platform": "Instagram", "format": "tile", "copy": "Just listed: 12 Example Street, Blair Athol", "since_days": 2 },
-        { "id": "CAL-0033", "date": "2026-11-06", "platform": "LinkedIn", "format": "text", "copy": "What a routine inspection actually covers", "since_days": 1 } ],
+        { "id": "CAL-0031", "row": 32, "date": "2026-11-04", "platform": "Instagram", "format": "tile", "copy": "Just listed: 12 Example Street, Blair Athol", "since_days": 2 },
+        { "id": "CAL-0033", "row": 34, "date": "2026-11-06", "platform": "LinkedIn", "format": "text", "copy": "What a routine inspection actually covers", "since_days": 1 } ],
       "facts_expiring": [ { "id": "F-0012", "fact": "Median days on market, Blair Athol houses: 24 (Sep 2026)", "expires_on": "2026-11-10" } ],
-      "top_post": { "platform": "Facebook", "copy": "Sold in 9 days: 4 Sample Avenue, Enfield", "engagement": 142, "link": "" } },
-    { "id": "me2", "name": "Me²", "attention": [],
+      "top_posts": [
+        { "platform": "Facebook", "copy": "Sold in 9 days: 4 Sample Avenue, Enfield", "engagement": 142, "link": "" },
+        { "platform": "Instagram", "copy": "Three things landlords ask us every spring", "engagement": 97, "link": "" },
+        { "platform": "YouTube Shorts", "copy": "Walkthrough: 8 Demo Court, Mount Gambier", "engagement": 30, "link": "" } ],
+      "search_movers": [
+        { "query": "property management mount gambier", "position": 4.2, "prior_position": 7.8, "clicks": 41 },
+        { "query": "rental appraisal adelaide", "position": 6.1, "prior_position": 9.4, "clicks": 22 },
+        { "query": "houses for sale blair athol", "position": 11.3, "prior_position": 8.9, "clicks": 15 } ] },
+    { "id": "me2", "name": "Me²", "links": { "project": "", "drive": "", "metricool": "" }, "attention": [],
       "results": {
-        "reach": { "label": "Reach", "value": 3100, "prior": 2600, "source": "Metricool" },
-        "engagement": { "label": "Engagements", "value": 128, "prior": 95, "source": "Metricool" },
-        "followers_delta": { "label": "New followers", "value": 14, "prior": 9, "source": "Metricool" },
-        "sessions": { "label": "Site sessions", "value": 640, "prior": 590, "source": "GA4" },
-        "search_clicks": { "label": "Search clicks", "value": 96, "prior": 84, "source": "Search Console" } },
+        "reach": { "label": "Reach", "value": 3100, "prior": 2600, "source": "Metricool", "history": [1400, 1700, 1900, 2200, 2400, 2600, 3100] },
+        "engagement": { "label": "Engagements", "value": 128, "prior": 95, "source": "Metricool", "history": [40, 55, 62, 78, 84, 95, 128] },
+        "followers_delta": { "label": "New followers", "value": 14, "prior": 9, "source": "Metricool", "history": [3, 5, 4, 7, 8, 9, 14] },
+        "sessions": { "label": "Site sessions", "value": 640, "prior": 590, "source": "GA4", "history": [410, 450, 480, 520, 560, 590, 640] },
+        "search_clicks": { "label": "Search clicks", "value": 96, "prior": 84, "source": "Search Console", "history": [52, 58, 63, 70, 77, 84, 96] } },
+      "platforms": [
+        { "name": "LinkedIn", "posts": 3, "reach": 2300, "engagement": 104, "followers_delta": 11 },
+        { "name": "Facebook", "posts": 2, "reach": 800, "engagement": 24, "followers_delta": 3 } ],
       "spend": { "month": "2026-11", "categories": [ { "name": "Ads", "spent": 0, "budget": 300 }, { "name": "Tools", "spent": 43, "budget": 45 } ] },
       "this_week": { "planned": 5, "scheduled": 4, "in_review": 1, "idea": 0 },
-      "queue": [ { "id": "CAL-0035", "date": "2026-11-05", "platform": "LinkedIn", "format": "tile", "copy": "One person, dedicated to you. Specialists behind them.", "since_days": 1 } ],
+      "calendar_week": [
+        { "id": "CAL-0029", "date": "2026-11-02", "platform": "LinkedIn", "status": "Scheduled", "copy": "Why we check every email" },
+        { "id": "CAL-0035", "date": "2026-11-05", "platform": "LinkedIn", "status": "In review", "copy": "One person, dedicated to you", "row": 36 },
+        { "id": "CAL-0037", "date": "2026-11-05", "platform": "Facebook", "status": "Scheduled", "copy": "Say a plumber with four vans…" },
+        { "id": "CAL-0038", "date": "2026-11-07", "platform": "LinkedIn", "status": "Scheduled", "copy": "What 'checked before it goes out' means" },
+        { "id": "CAL-0039", "date": "2026-11-08", "platform": "Facebook", "status": "Scheduled", "copy": "The 10pm admin problem" } ],
+      "queue": [ { "id": "CAL-0035", "row": 36, "date": "2026-11-05", "platform": "LinkedIn", "format": "tile", "copy": "One person, dedicated to you. Specialists behind them.", "since_days": 1 } ],
       "facts_expiring": [],
-      "top_post": { "platform": "LinkedIn", "copy": "Why we check every email before it goes out", "engagement": 61, "link": "" } },
-    { "id": "courage", "name": "Courage Health & Fitness",
+      "top_posts": [ { "platform": "LinkedIn", "copy": "Why we check every email before it goes out", "engagement": 61, "link": "" }, { "platform": "LinkedIn", "copy": "An extra set of hands, explained", "engagement": 33, "link": "" } ],
+      "search_movers": [ { "query": "outsourced back office australia", "position": 9.6, "prior_position": 14.2, "clicks": 12 } ] },
+    { "id": "courage", "name": "Courage Health & Fitness", "links": {},
       "attention": [ { "kind": "setup", "text": "Project not built yet: brand inputs still pending from the client" } ],
-      "results": {}, "spend": { "month": "2026-11", "categories": [] },
-      "this_week": { "planned": 0, "scheduled": 0, "in_review": 0, "idea": 0 }, "queue": [], "facts_expiring": [], "top_post": null }
+      "results": {}, "platforms": [], "spend": { "month": "2026-11", "categories": [] },
+      "this_week": { "planned": 0, "scheduled": 0, "in_review": 0, "idea": 0 }, "calendar_week": [], "queue": [], "facts_expiring": [], "top_posts": [], "search_movers": [] }
   ]
 };
+
+const TRIGGERS = [
+  { key: 'Compliance hard block', rule: 'A non-compliant post reached approval or went live', threshold: 1 },
+  { key: 'Self-serve renderer', rule: 'The Executive waits on Elliot for tiles more than twice a week', threshold: 3 },
+  { key: 'Spend module', rule: 'Month-end spend takes more than an hour to reconcile', threshold: 1 },
+  { key: 'Full hub', rule: 'A fourth or fifth client signs', threshold: 1 },
+];
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num = n => Number(n).toLocaleString('en-AU');
 const aud = n => '$' + Number(n).toLocaleString('en-AU', { maximumFractionDigits: 0 });
-const dateAU = iso => { const d = new Date(iso + 'T00:00:00'); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' }); };
+const parseDate = iso => { const d = new Date(String(iso).slice(0, 10) + 'T00:00:00'); return isNaN(d) ? null : d; };
+const dateAU = (iso, opts = { weekday: 'short', day: 'numeric', month: 'short' }) => { const d = parseDate(iso); return d ? d.toLocaleDateString('en-AU', opts) : esc(iso); };
+const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const isoDate = d => d.toISOString().slice(0, 10);
+const DATA = { current: null };
 
 function delta(cur, prior) {
   if (prior == null || prior === 0) return '';
   const pct = Math.round((cur - prior) / prior * 100);
   const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : '';
-  const sign = pct > 0 ? '+' : '';
-  return `<div class="delta ${cls}">${sign}${pct}% vs prior week</div>`;
+  return `<div class="delta ${cls}">${pct > 0 ? '+' : ''}${pct}% vs prior week</div>`;
 }
 
-function renderStats(results) {
+function sparkline(values, weeks) {
+  if (!values || values.length < 2) return '';
+  const W = 200, H = 34, pad = 3;
+  const min = Math.min(...values), max = Math.max(...values), span = max - min || 1;
+  const x = i => pad + i * (W - pad * 2) / (values.length - 1);
+  const y = v => H - pad - (v - min) / span * (H - pad * 2);
+  const pts = values.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`);
+  const line = 'M' + pts.join(' L');
+  const area = `${line} L${x(values.length - 1).toFixed(1)},${H} L${x(0).toFixed(1)},${H} Z`;
+  const last = values.length - 1;
+  const dots = values.map((v, i) => `<rect x="${(x(i) - (W / values.length) / 2).toFixed(1)}" y="0" width="${(W / values.length).toFixed(1)}" height="${H}" fill="transparent" data-i="${i}" data-v="${v}" data-w="${esc(weeks?.[i] ?? '')}"></rect>`).join('');
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true"><path class="area" d="${area}"/><path class="line" d="${line}"/><circle cx="${x(last).toFixed(1)}" cy="${y(values[last]).toFixed(1)}" r="3"/>${dots}</svg>`;
+}
+
+function renderStats(results, weeks, compact) {
   const keys = Object.keys(results || {});
   if (!keys.length) return '<p class="empty">No results yet.</p>';
-  return `<div class="stats">${keys.map(k => { const r = results[k]; return `
-    <div class="stat"><div class="label">${esc(r.label)}</div><div class="value">${num(r.value)}</div>${delta(r.value, r.prior)}<div class="src">${esc(r.source)}</div></div>`; }).join('')}</div>`;
+  const shown = compact ? keys.slice(0, 3) : keys;
+  return `<div class="${compact ? 'mini' : 'stats'}">${shown.map(k => { const r = results[k]; return `
+    <div class="stat"><div class="label">${esc(r.label)}</div><div class="value">${num(r.value)}</div>${compact ? '' : delta(r.value, r.prior)}
+      ${compact ? '' : sparkline(r.history, weeks)}${compact ? '' : `<div class="src">${esc(r.source)}${r.history ? ' · ' + r.history.length + ' weeks' : ''}</div><div class="tip"></div>`}</div>`; }).join('')}</div>`;
 }
 
-function renderSpend(spend) {
+function monthPace(month, snapshotDate) {
+  const d = parseDate(snapshotDate); if (!d || !month) return null;
+  const [y, m] = month.split('-').map(Number);
+  const days = new Date(y, m, 0).getDate();
+  const day = (d.getFullYear() === y && d.getMonth() + 1 === m) ? d.getDate() : (d > new Date(y, m, 0) ? days : 0);
+  return { frac: day / days, day, days };
+}
+
+function renderSpend(spend, snapshotDate) {
   const cats = spend?.categories || [];
   if (!cats.length) return '<p class="empty">No budget set.</p>';
   const max = Math.max(...cats.map(c => Math.max(c.budget, c.spent)), 1);
+  const pace = monthPace(spend.month, snapshotDate);
   let ts = 0, tb = 0;
   const rows = cats.map(c => {
     ts += c.spent; tb += c.budget;
     const ratio = c.budget ? c.spent / c.budget : 0;
     const cls = ratio > 1 ? 'over' : ratio >= .8 ? 'near' : '';
-    const w = Math.min(100, c.spent / max * 100);
-    const bw = Math.min(100, c.budget / max * 100);
+    const w = Math.min(100, c.spent / max * 100), bw = Math.min(100, c.budget / max * 100);
+    const pw = pace ? Math.min(100, c.budget * pace.frac / max * 100) : null;
     return `<div class="spend-row"><span>${esc(c.name)}</span>
-      <div class="track" title="${esc(c.name)}: ${aud(c.spent)} of ${aud(c.budget)}"><div class="fill ${cls}" style="width:${w}%"></div><div style="position:absolute;left:${bw}%;top:0;bottom:0;border-left:2px solid var(--ink-3)"></div></div>
+      <div class="track" title="${esc(c.name)}: ${aud(c.spent)} spent of ${aud(c.budget)}${pace ? `; on-pace point ${aud(c.budget * pace.frac)}` : ''}">
+        <div class="fill ${cls}" style="width:${w}%"></div>${pw != null ? `<div class="pace" style="left:${pw}%"></div>` : ''}<div class="tick" style="left:${bw}%"></div></div>
       <span class="amt"><b>${aud(c.spent)}</b> / ${aud(c.budget)}</span></div>`;
   }).join('');
-  return `<div class="spend">${rows}<div class="spend-total"><span>Month to date, ex-GST</span><b>${aud(ts)} of ${aud(tb)}</b></div></div>`;
+  let paceTag = '';
+  if (pace && tb) {
+    const expected = tb * pace.frac;
+    const diff = ts - expected;
+    const cls = ts > tb ? 'bad' : Math.abs(diff) <= tb * .05 ? 'good' : diff > 0 ? 'warn' : 'muted';
+    const label = ts > tb ? 'over budget' : Math.abs(diff) <= tb * .05 ? 'on pace' : diff > 0 ? `${aud(diff)} ahead of pace` : `${aud(-diff)} under pace`;
+    paceTag = `<span class="pill ${cls}">${label}</span>`;
+  }
+  return `<div class="spend">${rows}<div class="spend-total"><span>Month to date, ex-GST${pace ? ` · day ${pace.day} of ${pace.days}` : ''}</span><span>${paceTag} <b>${aud(ts)} of ${aud(tb)}</b></span></div>
+    <div class="legend"><span><i style="background:var(--bar-fill)"></i>Spent</span><span><i style="border-left:2px solid var(--ink-3);width:0;height:12px"></i> Budget</span><span><i style="border-left:2px dashed var(--accent);width:0;height:12px"></i> On-pace today</span></div></div>`;
 }
 
-function renderQueue(queue) {
+function sheetLink(data, row) {
+  if (!data.sheet_url || !row) return '';
+  const gid = data.calendar_gid ?? '0';
+  return `${data.sheet_url}#gid=${encodeURIComponent(gid)}&range=A${row}`;
+}
+
+function renderQueue(queue, data) {
   if (!queue?.length) return '<p class="empty">Nothing waiting for approval.</p>';
-  return `<div class="table-wrap"><table><thead><tr><th>Row</th><th>Date</th><th>Platform</th><th>Post</th><th>Waiting</th></tr></thead><tbody>
-    ${queue.map(q => `<tr><td class="num">${esc(q.id)}</td><td class="num">${dateAU(q.date)}</td><td>${esc(q.platform)}</td><td>${esc(q.copy)}</td>
-      <td class="num"><span class="wait ${q.since_days >= 3 ? 'old' : ''}">${q.since_days}d</span></td></tr>`).join('')}
+  return `<div class="table-wrap"><table><thead><tr><th>Row</th><th>Date</th><th>Platform</th><th>Post</th><th class="num">Waiting</th></tr></thead><tbody>
+    ${queue.map(q => { const l = sheetLink(data, q.row); return `<tr><td class="num" style="text-align:left">${l ? `<a href="${esc(l)}" target="_blank" rel="noopener">${esc(q.id)}</a>` : esc(q.id)}</td><td style="white-space:nowrap">${dateAU(q.date)}</td><td>${esc(q.platform)}</td><td>${esc(q.copy)}</td>
+      <td class="num"><span class="wait ${q.since_days >= 3 ? 'old' : ''}">${q.since_days}d</span></td></tr>`; }).join('')}
   </tbody></table></div>`;
 }
 
-function renderBrand(b) {
+function renderWeek(b, data) {
+  const start = parseDate(data.snapshot_date); if (!start) return '';
+  const posts = b.calendar_week || [];
+  const days = Array.from({ length: 7 }, (_, i) => addDays(start, i));
+  const today = isoDate(new Date());
+  return `<div class="week">${days.map(d => { const iso = isoDate(d); const ps = posts.filter(p => String(p.date).slice(0, 10) === iso);
+    return `<div class="day ${iso === today ? 'today' : ''}"><div class="d">${d.toLocaleDateString('en-AU', { weekday: 'short' })}<span>${d.getDate()}</span></div>
+      ${ps.map(p => { const l = sheetLink(data, p.row); const inner = `<b>${esc(p.platform)}</b> ${esc(p.copy)}`; return `<div class="post ${esc(p.status).replace(/\s+/g, '.')}" title="${esc(p.id)} · ${esc(p.status)} · ${esc(p.copy)}">${l ? `<a href="${esc(l)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${inner}</a>` : inner}</div>`; }).join('')}
+    </div>`; }).join('')}</div>
+    <div class="legend"><span><i style="background:var(--good)"></i>Scheduled / Published</span><span><i style="background:var(--warn)"></i>In review</span><span><i style="background:var(--ink-3)"></i>Idea</span></div>`;
+}
+
+function renderPlatforms(platforms) {
+  if (!platforms?.length) return '';
+  return `<div class="table-wrap"><table><thead><tr><th>Platform</th><th class="num">Posts</th><th class="num">Reach</th><th class="num">Eng.</th><th class="num">Rate</th><th class="num">New fol.</th></tr></thead><tbody>
+    ${platforms.map(p => `<tr><td>${esc(p.name)}</td><td class="num">${num(p.posts)}</td><td class="num">${num(p.reach)}</td><td class="num">${num(p.engagement)}</td><td class="num">${p.reach ? (p.engagement / p.reach * 100).toFixed(1) + '%' : '–'}</td><td class="num">${p.followers_delta > 0 ? '+' : ''}${num(p.followers_delta)}</td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+
+function renderMovers(movers) {
+  if (!movers?.length) return '<p class="empty">No ranking changes to report.</p>';
+  return `<div class="table-wrap"><table><thead><tr><th>Query</th><th class="num">Position</th><th class="num">Change</th><th class="num">Clicks</th></tr></thead><tbody>
+    ${movers.map(m => { const ch = m.prior_position - m.position; const cls = ch > 0 ? 'up' : ch < 0 ? 'down' : ''; return `<tr><td>${esc(m.query)}</td><td class="num">${m.position.toFixed(1)}</td><td class="num mover ${cls}">${ch > 0 ? '▲ ' : ch < 0 ? '▼ ' : ''}${Math.abs(ch).toFixed(1)}</td><td class="num">${num(m.clicks)}</td></tr>`; }).join('')}
+  </tbody></table></div>`;
+}
+
+function renderTop(posts) {
+  if (!posts?.length) return '<p class="empty">No posts last week.</p>';
+  return `<ol class="top">${posts.map(p => `<li><b>${esc(p.copy)}</b> <span>${esc(p.platform)}, ${num(p.engagement)} engagements</span>${p.link ? ` <a href="${esc(p.link)}" target="_blank" rel="noopener">open</a>` : ''}</li>`).join('')}</ol>`;
+}
+
+function renderBrandDetail(b, data) {
   const w = b.this_week || {};
-  const facts = (b.facts_expiring || []).map(f => `<li>${esc(f.id)}: ${esc(f.fact)} <span class="num">(expires ${dateAU(f.expires_on)})</span></li>`).join('');
-  return `<section class="brand" id="${esc(b.id)}">
-    <header><h2>${esc(b.name)}</h2>
-      <div class="week"><span>This week <b>${w.planned ?? 0}</b> planned</span><span><b>${w.scheduled ?? 0}</b> scheduled</span><span><b>${w.in_review ?? 0}</b> in review</span><span><b>${w.idea ?? 0}</b> ideas</span></div>
-    </header>
-    <div><h3>Last week</h3>${renderStats(b.results)}
-      ${b.top_post ? `<p class="top">Top post (${esc(b.top_post.platform)}): <b>${esc(b.top_post.copy)}</b>, ${num(b.top_post.engagement)} engagements${b.top_post.link ? ` · <a href="${esc(b.top_post.link)}" target="_blank" rel="noopener">open</a>` : ''}</p>` : ''}
+  const facts = (b.facts_expiring || []).map(f => { const d = parseDate(f.expires_on); const left = d ? Math.round((d - parseDate(data.snapshot_date)) / 864e5) : null; return `<li>${esc(f.id)}: ${esc(f.fact)} <span class="pill ${left != null && left <= 7 ? 'warn' : 'muted'}">${left != null ? (left < 0 ? 'expired' : left + ' days') : esc(f.expires_on)}</span></li>`; }).join('');
+  const links = [b.links?.project && `<a href="${esc(b.links.project)}" target="_blank" rel="noopener">Project</a>`, data.sheet_url && `<a href="${esc(data.sheet_url)}" target="_blank" rel="noopener">Marketing Sheet</a>`, b.links?.drive && `<a href="${esc(b.links.drive)}" target="_blank" rel="noopener">Drive</a>`, b.links?.metricool && `<a href="${esc(b.links.metricool)}" target="_blank" rel="noopener">Metricool</a>`].filter(Boolean).join('');
+  return `<section class="detail card">
+    <header><h2>${esc(b.name)}</h2><div class="links">${links}</div></header>
+    ${b.attention?.length ? `<div class="attention"><h2 class="eyebrow">Needs attention</h2><ul>${b.attention.map(a => `<li><span class="tag ${esc(a.kind)}">${esc(a.kind)}</span><span>${esc(a.text)}</span></li>`).join('')}</ul></div>` : ''}
+    <div><h3>This week · ${w.planned ?? 0} planned, ${w.scheduled ?? 0} scheduled, ${w.in_review ?? 0} in review, ${w.idea ?? 0} ideas</h3>${renderWeek(b, data)}</div>
+    <div><h3>Last week · ${esc(data.period?.last_week || '')}</h3>${renderStats(b.results, data.history_weeks, false)}</div>
+    <div class="cols">
+      <div><h3>By platform</h3>${renderPlatforms(b.platforms) || '<p class="empty">No platform data.</p>'}<h3 style="margin-top:18px">Top posts</h3>${renderTop(b.top_posts || (b.top_post ? [b.top_post] : []))}</div>
+      <div><h3>Approval queue</h3>${renderQueue(b.queue, data)}${facts ? `<h3 style="margin-top:18px">Facts expiring within 14 days</h3><ul style="margin:0;padding-left:18px;font-size:14px;display:grid;gap:4px">${facts}</ul>` : ''}</div>
     </div>
     <div class="cols">
-      <div><h3>Spend vs budget, ${esc(b.spend?.month || '')}</h3>${renderSpend(b.spend)}</div>
-      <div><h3>Approval queue</h3>${renderQueue(b.queue)}
-        ${facts ? `<h3 style="margin-top:16px">Facts expiring within 14 days</h3><ul style="margin:0;padding-left:18px;font-size:14px">${facts}</ul>` : ''}
-      </div>
+      <div><h3>Spend vs budget, ${esc(b.spend?.month || '')}</h3>${renderSpend(b.spend, data.snapshot_date)}</div>
+      <div><h3>Search movers</h3>${renderMovers(b.search_movers)}</div>
     </div>
   </section>`;
 }
 
-function render(data) {
-  document.getElementById('meta').innerHTML =
-    `<b>${esc(data.week_label || '')}</b> · snapshot ${esc(data.snapshot_date || '')} · last week ${esc(data.period?.last_week || '')}` +
-    (data.sample ? '<span class="sample-flag">Example data</span>' : '');
-  const items = (data.brands || []).flatMap(b => (b.attention || []).map(a => ({ brand: b.name, ...a })));
-  const att = document.getElementById('attention');
-  att.className = 'attention' + (items.length ? '' : ' clear');
-  att.innerHTML = `<h2>${items.length ? `Needs attention (${items.length})` : 'Nothing needs attention'}</h2>` +
-    (items.length ? `<ul>${items.map(i => `<li><span class="tag ${esc(i.kind)}">${esc(i.kind)}</span><span><span class="brand-name">${esc(i.brand)}</span>${esc(i.text)}</span></li>`).join('')}</ul>` : '');
-  document.getElementById('brands').innerHTML = `<div class="wrap" style="padding:0">${(data.brands || []).map(renderBrand).join('')}</div>`;
+function renderOverview(data) {
+  const items = (data.brands || []).flatMap(b => (b.attention || []).map(a => ({ brand: b, ...a })));
+  const attention = `<section class="attention ${items.length ? '' : 'clear'}"><h2 class="eyebrow">${items.length ? `Needs attention (${items.length})` : 'Nothing needs attention'}</h2>
+    ${items.length ? `<ul>${items.map(i => `<li><span class="tag ${esc(i.kind)}">${esc(i.kind)}</span><span><a class="brand-link" href="#${esc(i.brand.id)}">${esc(i.brand.name)}</a>${esc(i.text)}</span></li>`).join('')}</ul>` : ''}</section>`;
+  const cards = `<div class="grid-3">${(data.brands || []).map(b => {
+    const cats = b.spend?.categories || []; const ts = cats.reduce((a, c) => a + c.spent, 0), tb = cats.reduce((a, c) => a + c.budget, 0);
+    const pace = monthPace(b.spend?.month, data.snapshot_date); const w = b.this_week || {};
+    let paceCls = 'muted', paceTxt = 'no budget';
+    if (tb && pace) { const diff = ts - tb * pace.frac; paceCls = ts > tb ? 'bad' : Math.abs(diff) <= tb * .05 ? 'good' : diff > 0 ? 'warn' : 'muted'; paceTxt = ts > tb ? 'over' : Math.abs(diff) <= tb * .05 ? 'on pace' : diff > 0 ? 'ahead' : 'under'; }
+    const oldest = Math.max(0, ...(b.queue || []).map(q => q.since_days || 0));
+    return `<section class="card brand-card"><header><h2><a href="#${esc(b.id)}">${esc(b.name)}</a></h2>${b.attention?.length ? `<span class="pill bad">${b.attention.length} flag${b.attention.length > 1 ? 's' : ''}</span>` : '<span class="pill good">clear</span>'}</header>
+      ${renderStats(b.results, data.history_weeks, true)}
+      <div class="kv">
+        <span>This week</span><span><b>${w.planned ?? 0}</b> planned · <b>${w.scheduled ?? 0}</b> scheduled</span>
+        <span>Waiting on you</span><span><b>${(b.queue || []).length}</b>${oldest >= 3 ? ` <span class="pill warn">oldest ${oldest}d</span>` : ''}</span>
+        <span>Spend</span><span><b>${aud(ts)}</b> of ${aud(tb)} <span class="pill ${paceCls}">${paceTxt}</span></span>
+      </div></section>`; }).join('')}</div>`;
+  const pl = data.pain_log || { total: 0, by_trigger: {} };
+  const started = parseDate(data.started_on), snap = parseDate(data.snapshot_date);
+  const weekNo = started && snap ? Math.floor((snap - started) / (7 * 864e5)) + 1 : null;
+  const tracker = `<section class="card"><h2 class="eyebrow">Week-8 decision tracker</h2>
+    <p class="countdown">${weekNo ? `Week <b>${weekNo}</b> of the lite setup${weekNo < 8 ? `, <b>${8 - weekNo}</b> to go` : ', decision due'}.` : ''} <b>${num(pl.total || 0)}</b> pain log rows so far. Build only what the log justifies.</p>
+    <div class="tracker">${TRIGGERS.map(t => { const n = pl.by_trigger?.[t.key] || 0; const hit = n >= t.threshold; return `<div class="trigger ${hit ? 'hit' : ''}"><div class="n">${n}</div><div class="t">${esc(t.key)}</div><div class="r">${esc(t.rule)}</div>${hit ? '<span class="pill warn">threshold met</span>' : ''}</div>`; }).join('')}</div>
+    ${pl.recent?.length ? `<h3 style="margin-top:16px">Recent pain</h3><div class="table-wrap"><table><thead><tr><th>Date</th><th>Brand</th><th>What happened</th><th>Points to</th></tr></thead><tbody>${pl.recent.map(r => `<tr><td style="white-space:nowrap">${dateAU(r.date, { day: 'numeric', month: 'short' })}</td><td>${esc(r.brand)}</td><td>${esc(r.what_happened)}</td><td>${esc(r.build_trigger)}</td></tr>`).join('')}</tbody></table></div>` : ''}
+  </section>`;
+  return attention + cards + tracker;
 }
+
+function tabsFor(data) {
+  const tabs = [{ id: 'overview', name: 'Overview', count: null }, ...(data.brands || []).map(b => ({ id: b.id, name: b.name, count: (b.attention || []).length }))];
+  return tabs;
+}
+
+function currentTab(data) {
+  const tabs = tabsFor(data);
+  const h = (location.hash || '').replace('#', '');
+  if (tabs.some(t => t.id === h)) return h;
+  try { const s = localStorage.getItem('me2-dash-tab'); if (tabs.some(t => t.id === s)) return s; } catch {}
+  return 'overview';
+}
+
+function show(id) {
+  const data = DATA.current; if (!data) return;
+  const tabs = tabsFor(data);
+  const nav = document.getElementById('tabs');
+  nav.innerHTML = tabs.map((t, i) => `<button role="tab" id="tab-${esc(t.id)}" aria-selected="${t.id === id}" data-id="${esc(t.id)}" title="Key ${i + 1}">${esc(t.name)}${t.count != null ? `<span class="count ${t.count ? '' : 'zero'}">${t.count}</span>` : ''}</button>`).join('') + '<span class="hint">1–4</span>';
+  nav.querySelectorAll('button').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.id; }));
+  const view = document.getElementById('view');
+  view.style.display = 'grid'; view.style.gap = '22px';
+  if (id === 'overview') view.innerHTML = renderOverview(data);
+  else { const b = data.brands.find(x => x.id === id); view.innerHTML = b ? renderBrandDetail(b, data) : ''; }
+  try { localStorage.setItem('me2-dash-tab', id); } catch {}
+  wireSparklines(view);
+}
+
+function wireSparklines(root) {
+  root.querySelectorAll('.stat').forEach(stat => {
+    const tip = stat.querySelector('.tip'); const svg = stat.querySelector('svg.spark'); if (!tip || !svg) return;
+    svg.addEventListener('mousemove', e => { const r = e.target.closest('rect[data-v]'); if (!r) return; tip.style.display = 'block'; tip.textContent = `${r.dataset.w ? r.dataset.w + ': ' : ''}${num(r.dataset.v)}`; });
+    svg.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+  });
+}
+
+function render(data) {
+  DATA.current = data;
+  document.getElementById('meta').innerHTML =
+    `<b>${esc(data.week_label || '')}</b> · snapshot ${esc(data.snapshot_date || '')}` + (data.sample ? '<span class="flag">Example data</span>' : '');
+  show(currentTab(data));
+}
+
+window.addEventListener('hashchange', () => { if (DATA.current) show(currentTab(DATA.current)); });
+window.addEventListener('keydown', e => {
+  if (e.target.closest('input, textarea, select') || e.metaKey || e.ctrlKey || e.altKey) return;
+  const n = Number(e.key); if (!n || !DATA.current) return;
+  const t = tabsFor(DATA.current)[n - 1]; if (t) location.hash = t.id;
+});
 
 fetch('data/portfolio.json', { cache: 'no-store' })
   .then(r => r.ok ? r.json() : Promise.reject(new Error(r.status)))

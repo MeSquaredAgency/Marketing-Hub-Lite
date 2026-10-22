@@ -1,12 +1,13 @@
 # Approved templates
 
-Four HTML/CSS templates. The `brand-post` skill fills them and renders them to PNG at the sizes in `skills/brand-post/platforms.md`. Changing a template is a brand decision: Elliot approves, then the new version is committed here and re-uploaded to the Project.
+Five HTML/CSS templates. The `brand-post` skill fills them and renders them to PNG at the sizes in `skills/brand-post/platforms.md`. Changing a template is a brand decision: Elliot approves, then the new version is committed here and re-uploaded to the Project.
 
 | Template | Brand | Fields | Formats |
 |---|---|---|---|
 | `listing-tile.html` | APN | status, open_time, address, suburb, price, beds, baths, cars, land, agent, agent_phone, photo | square, portrait, story, landscape, gbp |
 | `pm-hero.html` | APN | kicker, headline, body, cta, photo | square, portrait, story, landscape, gbp |
 | `quote-card.html` | APN | kicker, quote, name, role, photo (optional) | square, portrait, story, landscape |
+| `market-stat.html` | APN | kicker, stat, unit, label, source, note | square, portrait, story, landscape |
 | `me2-post.html` | Me² | kicker, headline, body, footer | square, portrait, story, landscape |
 
 ## Conventions
@@ -26,6 +27,13 @@ npm run samples                     # renders every sample at every size into ou
 ```
 
 Each line of output is `ok` or `CHECK`. `CHECK` means an element overflowed the canvas or the legal line is not visible; fix the copy length or the data before using the tile.
+
+Captions get the same treatment with the caption checker, which runs the mechanical checks (legal line, length, hashtags, banned claims, Me² results and prices) before the full checklist:
+
+```bash
+node scripts/check-caption.mjs apn instagram caption.txt
+node scripts/check-caption.mjs me2 linkedin caption.txt --json
+```
 
 Inside Claude without the script: open the template, replace the placeholders, set `data-format`, and screenshot at the exact pixel size. Apply the same two checks by eye.
 
