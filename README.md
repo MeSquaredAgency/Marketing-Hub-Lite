@@ -4,7 +4,7 @@ Everything needed to run marketing for **APN Real Estate**, **Me²** and **Coura
 
 Claude does the drafting, checking, rendering and reporting. Two connectors do the plumbing (Metricool for publishing and social data, Windsor.ai for GA4 and Search Console). Google Sheets and Drive hold the records. Nothing reaches a platform until a Calendar row says **Approved**.
 
-The plan this repo implements is in [`docs/lite-plan.md`](docs/lite-plan.md).
+The plan this repo implements is in [`docs/lite-plan.md`](docs/lite-plan.md). Connector status and account IDs are in [`docs/connectors.md`](docs/connectors.md).
 
 ## What is in here
 
@@ -49,7 +49,7 @@ About two to three days, most of it loading brand material.
 - [ ] Marketing Sheet built from `sheet/` (six tabs), Facts and Assets filled for each brand
 - [ ] `brand-post` skill uploaded to each Project and tested on one post per brand
 - [ ] Metricool: three brands created, every channel connected, connector added in Claude
-- [ ] Windsor.ai: GA4 and Search Console connected per site, connector added in Claude
+- [x] Windsor.ai connected in Claude (trial plan). GA4 for APN and Search Console for both sites verified; Facebook, LinkedIn, GBP and Google Ads also connected. Still missing: GA4 for mesquaredagency.com, Instagram, YouTube, TikTok. See [`docs/connectors.md`](docs/connectors.md)
 - [ ] Scheduled tasks created from `scheduled-tasks/`
 - [ ] Portfolio dashboard published from `dashboard/`
 - [ ] End-to-end test through the connector: one Facebook post, one LinkedIn post, one TikTok and one YouTube Short, each going Idea → Approved → Scheduled

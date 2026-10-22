@@ -21,15 +21,17 @@ From the Marketing Sheet at {{SHEET_URL}}:
 - **Facts**: this brand's rows with `expires_on` within the next 14 days, and any already expired that are still referenced in a Calendar row dated this week.
 - **Pain log**: rows for this brand added last week.
 
-From Metricool, for this brand:
+From Metricool, for this brand (Instagram, TikTok and YouTube results come only from here):
 - Last week's organic results per platform: posts published, reach, impressions, engagement, follower change, best-performing post with its link.
 - Last week's ads results if any campaigns ran: spend, impressions, clicks, leads or results, cost per result.
 - Every post currently scheduled in Metricool for this week, with its scheduled time and platform.
 - Best posting times for the next 7 days.
 
-From Windsor.ai, for this brand's website:
-- GA4: sessions, users, new users, top 5 landing pages, top 5 sources, conversions or key events, each with the change on the prior week.
-- Search Console: clicks, impressions, average position, top 5 queries, with the change on the prior week.
+From Windsor.ai (connector slugs and account IDs are in `docs/connectors.md`; call `get_fields` before `get_data`):
+- GA4 (`googleanalytics4`): sessions, users, new users, top 5 landing pages, top 5 sources, key events, each with the change on the prior week. Me² has no GA4 property connected yet; say so rather than guessing.
+- Search Console (`searchconsole`): clicks, impressions, average position, top 5 queries and the 5 biggest position moves, with the change on the prior week. Data lags about two days; use the latest complete week.
+- Facebook organic (`facebook_organic`), LinkedIn organic (`linkedin_organic`) and Google Business Profile (`google_my_business`): posts, reach, impressions, engagement, follower change for last week. Use these in place of Metricool for those platforms if Metricool is not connected or disagrees; note which source you used.
+- Google Ads (`google_ads`, APN only): spend, impressions, clicks, conversions, cost per conversion for last week, if any campaign ran.
 
 ### 2. Audit
 
