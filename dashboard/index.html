@@ -1,0 +1,224 @@
+<title>Me² Portfolio Dashboard</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* Layout: one column of brand panels under a portfolio "needs attention" strip. Scanned, not read. */
+  :root {
+    --bg: #fbf8f2; --surface: #ffffff; --line: #e6dfd3; --ink: #10202f; --ink-2: #4c5660; --ink-3: #8a8378;
+    --accent: #e7785c; --accent-ink: #a6412a;
+    --good: #2f7d4f; --warn: #b7791f; --bad: #b3261e; --neutral-fill: #efe9df;
+    --bar-fill: #10202f; --bar-track: #efe9df;
+    --sans: "Instrument Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121a22; --surface: #1a242e; --line: #2c3842; --ink: #f1ece4; --ink-2: #b9b2a7; --ink-3: #847d72;
+      --accent: #ef8a6e; --accent-ink: #f0a58d; --good: #6fc48f; --warn: #e0a84a; --bad: #f08a80; --neutral-fill: #243039;
+      --bar-fill: #f1ece4; --bar-track: #243039; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121a22; --surface: #1a242e; --line: #2c3842; --ink: #f1ece4; --ink-2: #b9b2a7; --ink-3: #847d72;
+    --accent: #ef8a6e; --accent-ink: #f0a58d; --good: #6fc48f; --warn: #e0a84a; --bad: #f08a80; --neutral-fill: #243039;
+    --bar-fill: #f1ece4; --bar-track: #243039; color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45;
+    padding-block: 24px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .wrap { max-width: 1100px; margin: 0 auto; display: grid; gap: 28px; }
+  header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
+  h1 { font-size: 22px; font-weight: 700; margin: 0; letter-spacing: -.01em; }
+  h1 sup { color: var(--accent); font-size: .6em; }
+  .meta { color: var(--ink-2); font-size: 14px; }
+  .meta b { color: var(--ink); font-weight: 600; }
+  .sample-flag { display: inline-block; margin-left: 10px; padding: 2px 8px; border-radius: 999px; background: var(--neutral-fill); color: var(--ink-2); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+
+  .attention { border: 1px solid var(--line); border-left: 4px solid var(--warn); background: var(--surface); border-radius: 6px; padding: 14px 18px; }
+  .attention.clear { border-left-color: var(--good); }
+  .attention h2 { margin: 0 0 8px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  .attention ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+  .attention li { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: baseline; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; background: var(--neutral-fill); color: var(--ink-2); white-space: nowrap; }
+  .tag.unapproved { color: var(--bad); }
+  .tag.fact, .tag.budget { color: var(--warn); }
+  .brand-name { font-weight: 600; margin-right: 6px; }
+
+  .brand { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 20px 22px; display: grid; gap: 20px; }
+  .brand > header h2 { margin: 0; font-size: 18px; font-weight: 700; }
+  .week { display: flex; gap: 14px; flex-wrap: wrap; color: var(--ink-2); font-size: 14px; }
+  .week span b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+  .stat { border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; display: grid; gap: 2px; min-width: 0; }
+  .stat .label { font-size: 12px; color: var(--ink-2); letter-spacing: .04em; text-transform: uppercase; font-weight: 600; }
+  .stat .value { font-size: 26px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.01em; line-height: 1.1; }
+  .stat .delta { font-size: 13px; font-variant-numeric: tabular-nums; color: var(--ink-2); }
+  .stat .delta.up { color: var(--good); } .stat .delta.down { color: var(--bad); }
+  .stat .src { font-size: 11px; color: var(--ink-3); }
+
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 20px; }
+  @media (max-width: 720px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+  .cols > div { min-width: 0; }
+  h3 { margin: 0 0 10px; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+
+  .spend { display: grid; gap: 10px; }
+  .spend-row { display: grid; grid-template-columns: 72px 1fr auto; gap: 10px; align-items: center; font-size: 14px; }
+  .spend-row .track { position: relative; height: 10px; background: var(--bar-track); border-radius: 2px; overflow: hidden; }
+  .spend-row .fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--bar-fill); border-radius: 0 2px 2px 0; }
+  .spend-row .fill.over { background: var(--bad); }
+  .spend-row .fill.near { background: var(--warn); }
+  .spend-row .amt { font-variant-numeric: tabular-nums; color: var(--ink-2); white-space: nowrap; }
+  .spend-row .amt b { color: var(--ink); font-weight: 600; }
+  .spend-total { display: flex; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 8px; font-size: 14px; color: var(--ink-2); }
+  .spend-total b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; color: var(--ink-2); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td .wait { color: var(--ink-3); font-size: 12px; }
+  td .wait.old { color: var(--warn); font-weight: 600; }
+  .table-wrap { overflow-x: auto; }
+  .empty { color: var(--ink-3); font-size: 14px; }
+  .top { font-size: 14px; color: var(--ink-2); }
+  .top b { color: var(--ink); }
+  a { color: var(--accent-ink); }
+  footer { color: var(--ink-3); font-size: 13px; }
+  @media (prefers-reduced-motion: no-preference) { .spend-row .fill { transition: width .4s ease; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Me<sup>2</sup> portfolio</h1>
+    <div class="meta" id="meta">Loading snapshot…</div>
+  </header>
+  <section class="attention" id="attention" aria-live="polite"></section>
+  <div id="brands"></div>
+  <footer>Snapshot written by the Monday brief task from the Marketing Sheet, Metricool and Windsor.ai. For anything newer, ask Claude in the brand's Project.</footer>
+</div>
+
+<script>
+const SAMPLE = {
+  "snapshot_date": "2026-11-02", "week_label": "Week of 2 Nov 2026", "period": { "last_week": "26 Oct – 1 Nov", "month": "2026-11" }, "sample": true,
+  "brands": [
+    { "id": "apn", "name": "APN Real Estate",
+      "attention": [
+        { "kind": "unapproved", "text": "1 Instagram post scheduled in Metricool for Thu 5 Nov has no Approved row" },
+        { "kind": "fact", "text": "F-0012 (median days on market, Blair Athol) expires 10 Nov and is used by CAL-0031" } ],
+      "results": {
+        "reach": { "label": "Reach", "value": 12400, "prior": 10900, "source": "Metricool" },
+        "engagement": { "label": "Engagements", "value": 486, "prior": 402, "source": "Metricool" },
+        "followers_delta": { "label": "New followers", "value": 38, "prior": 21, "source": "Metricool" },
+        "sessions": { "label": "Site sessions", "value": 1930, "prior": 2010, "source": "GA4" },
+        "search_clicks": { "label": "Search clicks", "value": 410, "prior": 388, "source": "Search Console" } },
+      "spend": { "month": "2026-11", "categories": [
+        { "name": "Ads", "spent": 420, "budget": 800 }, { "name": "Tools", "spent": 31, "budget": 60 },
+        { "name": "Creative", "spent": 0, "budget": 150 }, { "name": "Print", "spent": 185, "budget": 200 } ] },
+      "this_week": { "planned": 6, "scheduled": 3, "in_review": 2, "idea": 1 },
+      "queue": [
+        { "id": "CAL-0031", "date": "2026-11-04", "platform": "Instagram", "format": "tile", "copy": "Just listed: 12 Example Street, Blair Athol", "since_days": 2 },
+        { "id": "CAL-0033", "date": "2026-11-06", "platform": "LinkedIn", "format": "text", "copy": "What a routine inspection actually covers", "since_days": 1 } ],
+      "facts_expiring": [ { "id": "F-0012", "fact": "Median days on market, Blair Athol houses: 24 (Sep 2026)", "expires_on": "2026-11-10" } ],
+      "top_post": { "platform": "Facebook", "copy": "Sold in 9 days: 4 Sample Avenue, Enfield", "engagement": 142, "link": "" } },
+    { "id": "me2", "name": "Me²", "attention": [],
+      "results": {
+        "reach": { "label": "Reach", "value": 3100, "prior": 2600, "source": "Metricool" },
+        "engagement": { "label": "Engagements", "value": 128, "prior": 95, "source": "Metricool" },
+        "followers_delta": { "label": "New followers", "value": 14, "prior": 9, "source": "Metricool" },
+        "sessions": { "label": "Site sessions", "value": 640, "prior": 590, "source": "GA4" },
+        "search_clicks": { "label": "Search clicks", "value": 96, "prior": 84, "source": "Search Console" } },
+      "spend": { "month": "2026-11", "categories": [ { "name": "Ads", "spent": 0, "budget": 300 }, { "name": "Tools", "spent": 43, "budget": 45 } ] },
+      "this_week": { "planned": 5, "scheduled": 4, "in_review": 1, "idea": 0 },
+      "queue": [ { "id": "CAL-0035", "date": "2026-11-05", "platform": "LinkedIn", "format": "tile", "copy": "One person, dedicated to you. Specialists behind them.", "since_days": 1 } ],
+      "facts_expiring": [],
+      "top_post": { "platform": "LinkedIn", "copy": "Why we check every email before it goes out", "engagement": 61, "link": "" } },
+    { "id": "courage", "name": "Courage Health & Fitness",
+      "attention": [ { "kind": "setup", "text": "Project not built yet: brand inputs still pending from the client" } ],
+      "results": {}, "spend": { "month": "2026-11", "categories": [] },
+      "this_week": { "planned": 0, "scheduled": 0, "in_review": 0, "idea": 0 }, "queue": [], "facts_expiring": [], "top_post": null }
+  ]
+};
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = n => Number(n).toLocaleString('en-AU');
+const aud = n => '$' + Number(n).toLocaleString('en-AU', { maximumFractionDigits: 0 });
+const dateAU = iso => { const d = new Date(iso + 'T00:00:00'); return isNaN(d) ? esc(iso) : d.toLocaleDateString('en-AU', { weekday: 'short', day: 'numeric', month: 'short' }); };
+
+function delta(cur, prior) {
+  if (prior == null || prior === 0) return '';
+  const pct = Math.round((cur - prior) / prior * 100);
+  const cls = pct > 0 ? 'up' : pct < 0 ? 'down' : '';
+  const sign = pct > 0 ? '+' : '';
+  return `<div class="delta ${cls}">${sign}${pct}% vs prior week</div>`;
+}
+
+function renderStats(results) {
+  const keys = Object.keys(results || {});
+  if (!keys.length) return '<p class="empty">No results yet.</p>';
+  return `<div class="stats">${keys.map(k => { const r = results[k]; return `
+    <div class="stat"><div class="label">${esc(r.label)}</div><div class="value">${num(r.value)}</div>${delta(r.value, r.prior)}<div class="src">${esc(r.source)}</div></div>`; }).join('')}</div>`;
+}
+
+function renderSpend(spend) {
+  const cats = spend?.categories || [];
+  if (!cats.length) return '<p class="empty">No budget set.</p>';
+  const max = Math.max(...cats.map(c => Math.max(c.budget, c.spent)), 1);
+  let ts = 0, tb = 0;
+  const rows = cats.map(c => {
+    ts += c.spent; tb += c.budget;
+    const ratio = c.budget ? c.spent / c.budget : 0;
+    const cls = ratio > 1 ? 'over' : ratio >= .8 ? 'near' : '';
+    const w = Math.min(100, c.spent / max * 100);
+    const bw = Math.min(100, c.budget / max * 100);
+    return `<div class="spend-row"><span>${esc(c.name)}</span>
+      <div class="track" title="${esc(c.name)}: ${aud(c.spent)} of ${aud(c.budget)}"><div class="fill ${cls}" style="width:${w}%"></div><div style="position:absolute;left:${bw}%;top:0;bottom:0;border-left:2px solid var(--ink-3)"></div></div>
+      <span class="amt"><b>${aud(c.spent)}</b> / ${aud(c.budget)}</span></div>`;
+  }).join('');
+  return `<div class="spend">${rows}<div class="spend-total"><span>Month to date, ex-GST</span><b>${aud(ts)} of ${aud(tb)}</b></div></div>`;
+}
+
+function renderQueue(queue) {
+  if (!queue?.length) return '<p class="empty">Nothing waiting for approval.</p>';
+  return `<div class="table-wrap"><table><thead><tr><th>Row</th><th>Date</th><th>Platform</th><th>Post</th><th>Waiting</th></tr></thead><tbody>
+    ${queue.map(q => `<tr><td class="num">${esc(q.id)}</td><td class="num">${dateAU(q.date)}</td><td>${esc(q.platform)}</td><td>${esc(q.copy)}</td>
+      <td class="num"><span class="wait ${q.since_days >= 3 ? 'old' : ''}">${q.since_days}d</span></td></tr>`).join('')}
+  </tbody></table></div>`;
+}
+
+function renderBrand(b) {
+  const w = b.this_week || {};
+  const facts = (b.facts_expiring || []).map(f => `<li>${esc(f.id)}: ${esc(f.fact)} <span class="num">(expires ${dateAU(f.expires_on)})</span></li>`).join('');
+  return `<section class="brand" id="${esc(b.id)}">
+    <header><h2>${esc(b.name)}</h2>
+      <div class="week"><span>This week <b>${w.planned ?? 0}</b> planned</span><span><b>${w.scheduled ?? 0}</b> scheduled</span><span><b>${w.in_review ?? 0}</b> in review</span><span><b>${w.idea ?? 0}</b> ideas</span></div>
+    </header>
+    <div><h3>Last week</h3>${renderStats(b.results)}
+      ${b.top_post ? `<p class="top">Top post (${esc(b.top_post.platform)}): <b>${esc(b.top_post.copy)}</b>, ${num(b.top_post.engagement)} engagements${b.top_post.link ? ` · <a href="${esc(b.top_post.link)}" target="_blank" rel="noopener">open</a>` : ''}</p>` : ''}
+    </div>
+    <div class="cols">
+      <div><h3>Spend vs budget, ${esc(b.spend?.month || '')}</h3>${renderSpend(b.spend)}</div>
+      <div><h3>Approval queue</h3>${renderQueue(b.queue)}
+        ${facts ? `<h3 style="margin-top:16px">Facts expiring within 14 days</h3><ul style="margin:0;padding-left:18px;font-size:14px">${facts}</ul>` : ''}
+      </div>
+    </div>
+  </section>`;
+}
+
+function render(data) {
+  document.getElementById('meta').innerHTML =
+    `<b>${esc(data.week_label || '')}</b> · snapshot ${esc(data.snapshot_date || '')} · last week ${esc(data.period?.last_week || '')}` +
+    (data.sample ? '<span class="sample-flag">Example data</span>' : '');
+  const items = (data.brands || []).flatMap(b => (b.attention || []).map(a => ({ brand: b.name, ...a })));
+  const att = document.getElementById('attention');
+  att.className = 'attention' + (items.length ? '' : ' clear');
+  att.innerHTML = `<h2>${items.length ? `Needs attention (${items.length})` : 'Nothing needs attention'}</h2>` +
+    (items.length ? `<ul>${items.map(i => `<li><span class="tag ${esc(i.kind)}">${esc(i.kind)}</span><span><span class="brand-name">${esc(i.brand)}</span>${esc(i.text)}</span></li>`).join('')}</ul>` : '');
+  document.getElementById('brands').innerHTML = `<div class="wrap" style="padding:0">${(data.brands || []).map(renderBrand).join('')}</div>`;
+}
+
+fetch('data/portfolio.json', { cache: 'no-store' })
+  .then(r => r.ok ? r.json() : Promise.reject(new Error(r.status)))
+  .then(render)
+  .catch(() => render(SAMPLE));
+</script>

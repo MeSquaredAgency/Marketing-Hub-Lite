@@ -1,0 +1,79 @@
+{
+  "snapshot_date": "2026-11-02",
+  "week_label": "Week of 2 Nov 2026",
+  "period": { "last_week": "26 Oct – 1 Nov", "month": "2026-11" },
+  "sample": true,
+  "brands": [
+    {
+      "id": "apn",
+      "name": "APN Real Estate",
+      "attention": [
+        { "kind": "unapproved", "text": "1 Instagram post scheduled in Metricool for Thu 5 Nov has no Approved row" },
+        { "kind": "fact", "text": "F-0012 (median days on market, Blair Athol) expires 10 Nov and is used by CAL-0031" }
+      ],
+      "results": {
+        "reach": { "label": "Reach", "value": 12400, "prior": 10900, "source": "Metricool" },
+        "engagement": { "label": "Engagements", "value": 486, "prior": 402, "source": "Metricool" },
+        "followers_delta": { "label": "New followers", "value": 38, "prior": 21, "source": "Metricool" },
+        "sessions": { "label": "Site sessions", "value": 1930, "prior": 2010, "source": "GA4" },
+        "search_clicks": { "label": "Search clicks", "value": 410, "prior": 388, "source": "Search Console" }
+      },
+      "spend": {
+        "month": "2026-11",
+        "categories": [
+          { "name": "Ads", "spent": 420, "budget": 800 },
+          { "name": "Tools", "spent": 31, "budget": 60 },
+          { "name": "Creative", "spent": 0, "budget": 150 },
+          { "name": "Print", "spent": 185, "budget": 200 }
+        ]
+      },
+      "this_week": { "planned": 6, "scheduled": 3, "in_review": 2, "idea": 1 },
+      "queue": [
+        { "id": "CAL-0031", "date": "2026-11-04", "platform": "Instagram", "format": "tile", "copy": "Just listed: 12 Example Street, Blair Athol", "since_days": 2 },
+        { "id": "CAL-0033", "date": "2026-11-06", "platform": "LinkedIn", "format": "text", "copy": "What a routine inspection actually covers", "since_days": 1 }
+      ],
+      "facts_expiring": [
+        { "id": "F-0012", "fact": "Median days on market, Blair Athol houses: 24 (Sep 2026)", "expires_on": "2026-11-10" }
+      ],
+      "top_post": { "platform": "Facebook", "copy": "Sold in 9 days: 4 Sample Avenue, Enfield", "engagement": 142, "link": "" }
+    },
+    {
+      "id": "me2",
+      "name": "Me²",
+      "attention": [],
+      "results": {
+        "reach": { "label": "Reach", "value": 3100, "prior": 2600, "source": "Metricool" },
+        "engagement": { "label": "Engagements", "value": 128, "prior": 95, "source": "Metricool" },
+        "followers_delta": { "label": "New followers", "value": 14, "prior": 9, "source": "Metricool" },
+        "sessions": { "label": "Site sessions", "value": 640, "prior": 590, "source": "GA4" },
+        "search_clicks": { "label": "Search clicks", "value": 96, "prior": 84, "source": "Search Console" }
+      },
+      "spend": {
+        "month": "2026-11",
+        "categories": [
+          { "name": "Ads", "spent": 0, "budget": 300 },
+          { "name": "Tools", "spent": 43, "budget": 45 }
+        ]
+      },
+      "this_week": { "planned": 5, "scheduled": 4, "in_review": 1, "idea": 0 },
+      "queue": [
+        { "id": "CAL-0035", "date": "2026-11-05", "platform": "LinkedIn", "format": "tile", "copy": "One person, dedicated to you. Specialists behind them.", "since_days": 1 }
+      ],
+      "facts_expiring": [],
+      "top_post": { "platform": "LinkedIn", "copy": "Why we check every email before it goes out", "engagement": 61, "link": "" }
+    },
+    {
+      "id": "courage",
+      "name": "Courage Health & Fitness",
+      "attention": [
+        { "kind": "setup", "text": "Project not built yet: brand inputs still pending from the client" }
+      ],
+      "results": {},
+      "spend": { "month": "2026-11", "categories": [] },
+      "this_week": { "planned": 0, "scheduled": 0, "in_review": 0, "idea": 0 },
+      "queue": [],
+      "facts_expiring": [],
+      "top_post": null
+    }
+  ]
+}

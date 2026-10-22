@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>Me² post tile</title>
+<!--
+  Template: me2-post (Me²)
+  Formats: square 1080x1080, portrait 1080x1350, story 1080x1920, landscape 1200x628
+  Fields: kicker, headline, body, footer
+  Use for statements, short lists (use <br> in body), "how it works" steps, Elliot quotes.
+  Compliance: no client names, results claims, prices or named individuals other than Elliot.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fffdf9; --sand: #f7f2ea; --sand-dark: #eee6da; --coral: #e7785c; --coral-dark: #a6412a;
+    --navy: #10202f; --muted: #a49c92; --white: #ffffff;
+    --sans: "Instrument Sans", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --w: 1080px; --h: 1080px; --pad: 84px;
+  }
+  body[data-format="square"]    { --w: 1080px; --h: 1080px; }
+  body[data-format="portrait"]  { --w: 1080px; --h: 1350px; }
+  body[data-format="story"]     { --w: 1080px; --h: 1920px; --pad: 100px; }
+  body[data-format="landscape"] { --w: 1200px; --h: 628px;  --pad: 60px; }
+
+  * { box-sizing: border-box; margin: 0; }
+  html, body { background: var(--cream); }
+  body { width: var(--w); height: var(--h); overflow: hidden; font-family: var(--sans); color: var(--navy); }
+
+  .tile { position: relative; width: var(--w); height: var(--h); padding: var(--pad); display: grid; grid-template-rows: auto 1fr auto; gap: 36px; }
+  .tile::after { content: ""; position: absolute; right: calc(var(--pad) * -1.6); bottom: calc(var(--pad) * -1.6); width: 42%; aspect-ratio: 1; border-radius: 50%; background: var(--sand); z-index: 0; }
+  .tile > * { position: relative; z-index: 1; }
+  .kicker { font-size: 24px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--coral-dark); }
+  .main { align-self: center; display: grid; gap: 28px; }
+  .headline { font-size: 66px; font-weight: 600; line-height: 1.1; letter-spacing: -.02em; max-width: 14ch; }
+  .headline em { font-style: normal; color: var(--coral); }
+  .body { font-size: 32px; line-height: 1.45; color: var(--navy); opacity: .85; max-width: 30ch; }
+  .body:empty { display: none; }
+  .foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; }
+  .footer-text { font-size: 24px; color: var(--muted); }
+  .wordmark { font-size: 40px; font-weight: 700; letter-spacing: -.02em; }
+  .wordmark sup { font-size: .55em; vertical-align: super; color: var(--coral); }
+
+  body[data-format="story"] .headline { font-size: 88px; }
+  body[data-format="story"] .body { font-size: 38px; }
+  body[data-format="landscape"] .tile { gap: 18px; }
+  body[data-format="landscape"] .headline { font-size: 46px; max-width: 18ch; }
+  body[data-format="landscape"] .body { font-size: 24px; max-width: 40ch; }
+  body[data-format="landscape"] .kicker { font-size: 18px; }
+  body[data-format="landscape"] .footer-text { font-size: 18px; }
+  body[data-format="landscape"] .wordmark { font-size: 32px; }
+</style>
+</head>
+<body data-format="{{format}}">
+  <div class="tile">
+    <div class="kicker">{{kicker}}</div>
+    <div class="main">
+      <div class="headline">{{{headline}}}</div>
+      <div class="body">{{{body}}}</div>
+    </div>
+    <div class="foot">
+      <div class="footer-text">{{footer}}</div>
+      <div class="wordmark">Me<sup>2</sup></div>
+    </div>
+  </div>
+</body>
+</html>

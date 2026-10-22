@@ -1,0 +1,39 @@
+{
+  "id": "apn",
+  "name": "APN Real Estate",
+  "legal_name": "Adelaide Property Network",
+  "legal_line": "Adelaide Property Network | RLA 255336",
+  "tagline": "South Australian real estate, done properly.",
+  "website": "https://apnre.com.au",
+  "phone": "1300 123 276",
+  "timezone": "Australia/Adelaide",
+  "metricool_brand": "APN Real Estate",
+  "colours": {
+    "ink": "#111111",
+    "charcoal": "#2e2e2e",
+    "stone": "#f5f4f1",
+    "white": "#ffffff",
+    "lime": "#8dc600",
+    "lime_light": "#a3d93a",
+    "lime_wash": "rgba(141, 198, 0, 0.14)",
+    "line": "rgba(17, 17, 17, 0.12)"
+  },
+  "fonts": {
+    "serif": "Playfair Display",
+    "sans": "Figtree",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+  },
+  "logo": {
+    "note": "Add logo files to templates/assets/apn/ (logo-dark.svg, logo-light.svg). Templates fall back to a wordmark until then."
+  },
+  "channels": {
+    "facebook": "https://facebook.com/adelaidepropertynetwork",
+    "instagram": "https://instagram.com/apn.realestate",
+    "youtube": "https://youtube.com/@AdelaidepropertynetworkAu",
+    "tiktok": null,
+    "linkedin": null,
+    "gbp": ["Adelaide", "Mount Gambier"]
+  },
+  "hashtags": ["#apnrealestate", "#adelaiderealestate", "#mountgambier", "#southaustralia", "#propertymanagement"],
+  "templates": ["listing-tile", "pm-hero", "quote-card"]
+}

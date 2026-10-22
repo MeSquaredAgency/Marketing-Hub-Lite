@@ -1,0 +1,34 @@
+{
+  "id": "courage",
+  "name": "Courage Health & Fitness",
+  "legal_name": null,
+  "legal_line": null,
+  "tagline": null,
+  "website": null,
+  "phone": null,
+  "timezone": "Australia/Adelaide",
+  "metricool_brand": "Courage Health & Fitness",
+  "status": "inputs pending — see PROJECT.md",
+  "colours": {
+    "primary": null,
+    "secondary": null,
+    "background": null,
+    "text": null
+  },
+  "fonts": {
+    "sans": null,
+    "google_fonts_url": null
+  },
+  "logo": {
+    "note": "Pending from the client."
+  },
+  "channels": {
+    "instagram": null,
+    "facebook": null,
+    "tiktok": null,
+    "youtube": null,
+    "gbp": null
+  },
+  "hashtags": [],
+  "templates": []
+}

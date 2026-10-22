@@ -1,0 +1,37 @@
+{
+  "id": "me2",
+  "name": "Me²",
+  "legal_name": "Me Squared Agency",
+  "legal_line": null,
+  "tagline": "Back-office teams and websites for established businesses.",
+  "website": "https://mesquaredagency.com",
+  "email": "hello@mesquaredagency.com",
+  "timezone": "Australia/Adelaide",
+  "metricool_brand": "Me²",
+  "colours": {
+    "cream": "#fffdf9",
+    "sand": "#f7f2ea",
+    "sand_dark": "#eee6da",
+    "coral": "#e7785c",
+    "coral_dark": "#a6412a",
+    "navy": "#10202f",
+    "muted": "#a49c92",
+    "white": "#ffffff"
+  },
+  "fonts": {
+    "sans": "Instrument Sans",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap"
+  },
+  "logo": {
+    "url": "https://mesquaredagency.com/logo.png",
+    "note": "Add logo files to templates/assets/me2/. Templates fall back to the Me² wordmark until then."
+  },
+  "channels": {
+    "linkedin": "https://www.linkedin.com/company/mesquaredagency",
+    "facebook": "https://www.facebook.com/profile.php?id=61595133354911",
+    "instagram": null,
+    "youtube": null
+  },
+  "hashtags": ["#mesquared", "#backoffice", "#smallbusinessaustralia"],
+  "templates": ["me2-post"]
+}

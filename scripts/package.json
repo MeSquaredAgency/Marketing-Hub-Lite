@@ -1,0 +1,13 @@
+{
+  "name": "marketing-hub-lite-scripts",
+  "private": true,
+  "type": "module",
+  "description": "Renders the approved tile templates to PNG at platform sizes.",
+  "scripts": {
+    "render": "node render-tile.mjs",
+    "samples": "node render-tile.mjs listing-tile ../templates/samples/listing-tile.json --formats square,portrait,story,landscape,gbp --out ../out/samples && node render-tile.mjs pm-hero ../templates/samples/pm-hero.json --formats square,portrait,story,landscape,gbp --out ../out/samples && node render-tile.mjs quote-card ../templates/samples/quote-card.json --formats square,portrait,story,landscape --out ../out/samples && node render-tile.mjs me2-post ../templates/samples/me2-post.json --formats square,portrait,story,landscape --out ../out/samples"
+  },
+  "dependencies": {
+    "playwright": "^1.56.1"
+  }
+}

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<title>APN property management hero</title>
+<!--
+  Template: pm-hero (APN)
+  Formats: square 1080x1080, portrait 1080x1350, story 1080x1920, landscape 1200x628, gbp 1200x900
+  Fields: kicker, headline, body, cta, photo
+  Use for property management, landlord and tenant messaging, appraisals.
+  The legal line is fixed. Do not remove or restyle it.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #111111; --charcoal: #2e2e2e; --stone: #f5f4f1; --white: #ffffff;
+    --lime: #8dc600; --lime-light: #a3d93a;
+    --serif: "Playfair Display", Georgia, serif;
+    --sans: "Figtree", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --w: 1080px; --h: 1080px; --pad: 72px;
+  }
+  body[data-format="square"]    { --w: 1080px; --h: 1080px; }
+  body[data-format="portrait"]  { --w: 1080px; --h: 1350px; }
+  body[data-format="story"]     { --w: 1080px; --h: 1920px; --pad: 88px; }
+  body[data-format="landscape"] { --w: 1200px; --h: 628px;  --pad: 56px; }
+  body[data-format="gbp"]       { --w: 1200px; --h: 900px;  --pad: 64px; }
+
+  * { box-sizing: border-box; margin: 0; }
+  html, body { background: var(--stone); }
+  body { width: var(--w); height: var(--h); overflow: hidden; font-family: var(--sans); color: var(--ink); }
+
+  .tile { position: relative; width: var(--w); height: var(--h); display: grid; grid-template-rows: 44% 1fr; }
+  .photo { position: relative; overflow: hidden; background: var(--charcoal); }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo:has(img[src=""]) img { display: none; }
+  .bar { position: absolute; left: 0; bottom: 0; width: 100%; height: 14px; background: var(--lime); }
+
+  .panel { padding: calc(var(--pad) * .75) var(--pad) var(--pad); display: grid; grid-template-rows: auto auto 1fr auto; gap: 24px; }
+  .kicker { font-size: 24px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--charcoal); }
+  .kicker::before { content: ""; display: inline-block; width: 36px; height: 6px; background: var(--lime); margin-right: 14px; vertical-align: middle; }
+  .headline { font-family: var(--serif); font-weight: 600; font-size: 64px; line-height: 1.08; letter-spacing: -.01em; }
+  .body { font-size: 30px; line-height: 1.4; color: var(--charcoal); max-width: 34ch; }
+  .body:empty { display: none; }
+  .foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; border-top: 1px solid rgba(17,17,17,.12); padding-top: 24px; }
+  .cta { display: inline-block; background: var(--ink); color: var(--white); font-weight: 600; font-size: 26px; padding: 18px 28px; border-radius: 2px; }
+  .cta:empty { display: none; }
+  .brand { text-align: right; }
+  .wordmark { font-family: var(--serif); font-weight: 700; font-size: 34px; color: var(--ink); }
+  .wordmark small { font-family: var(--sans); font-weight: 600; font-size: 16px; color: var(--charcoal); margin-left: 8px; letter-spacing: .12em; text-transform: uppercase; }
+  .legal { font-size: 19px; color: var(--charcoal); letter-spacing: .03em; margin-top: 6px; }
+
+  body[data-format="story"] .tile { grid-template-rows: 50% 1fr; }
+  body[data-format="story"] .headline { font-size: 84px; }
+  body[data-format="story"] .body { font-size: 36px; }
+  body[data-format="landscape"] .tile { grid-template-rows: none; grid-template-columns: 42% 1fr; }
+  body[data-format="landscape"] .bar { top: 0; left: auto; right: 0; width: 12px; height: 100%; }
+  body[data-format="landscape"] .panel { padding: var(--pad); gap: 14px; align-content: center; }
+  body[data-format="landscape"] .headline { font-size: 44px; }
+  body[data-format="landscape"] .body { font-size: 22px; }
+  body[data-format="landscape"] .kicker { font-size: 18px; }
+  body[data-format="landscape"] .cta { font-size: 20px; padding: 12px 20px; }
+  body[data-format="landscape"] .foot { padding-top: 14px; }
+  body[data-format="landscape"] .legal { font-size: 16px; }
+  body[data-format="gbp"] .headline { font-size: 56px; }
+</style>
+</head>
+<body data-format="{{format}}">
+  <div class="tile">
+    <div class="photo">
+      <img src="{{photo}}" alt="">
+      <div class="bar"></div>
+    </div>
+    <div class="panel">
+      <div class="kicker">{{kicker}}</div>
+      <div class="headline">{{headline}}</div>
+      <div class="body">{{body}}</div>
+      <div class="foot">
+        <div class="cta">{{cta}}</div>
+        <div class="brand">
+          <div class="wordmark">APN<small>Real Estate</small></div>
+          <div class="legal">Adelaide Property Network | RLA 255336</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
