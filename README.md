@@ -50,7 +50,7 @@ About two to three days, most of it loading brand material.
 - [ ] `brand-post` skill uploaded to each Project and tested on one post per brand
 - [ ] Metricool: three brands created, every channel connected, connector added in Claude
 - [x] Windsor.ai connected in Claude (trial plan). GA4 for APN and Search Console for both sites verified; Facebook, LinkedIn, GBP and Google Ads also connected. Still missing: GA4 for mesquaredagency.com, Instagram, YouTube, TikTok. See [`docs/connectors.md`](docs/connectors.md)
-- [ ] Scheduled tasks created from `scheduled-tasks/`
+- [ ] Scheduled tasks created in the claude.ai UI from `scheduled-tasks/prompts/` with the connectors attached (see `scheduled-tasks/README.md` for why the UI, not a session)
 - [ ] Portfolio dashboard published from `dashboard/`
 - [ ] End-to-end test through the connector: one Facebook post, one LinkedIn post, one TikTok and one YouTube Short, each going Idea → Approved → Scheduled
 - [ ] Pain log tab started
